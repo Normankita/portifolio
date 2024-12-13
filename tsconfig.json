@@ -1,26 +1,23 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+    "target": "es5",                      // Compile for older JavaScript environments.
+    "lib": ["dom", "dom.iterable", "esnext"], // Include necessary library features.
+    "allowJs": true,                     // Allow JavaScript files in the project.
+    "skipLibCheck": true,                // Skip type checking of declaration files.
+    "esModuleInterop": true,             // Support for CommonJS modules.
+    "allowSyntheticDefaultImports": true, // Allow default imports even if they're not directly supported.
+    "strict": true,                      // Enable all strict type-checking options.
+    "forceConsistentCasingInFileNames": true, // Enforce consistent file naming.
+    "noFallthroughCasesInSwitch": true,  // Ensure all switch cases are handled properly.
+    "module": "esnext",                  // Use ES module resolution.
+    "moduleResolution": "node",         // Resolve modules as Node.js would.
+    "resolveJsonModule": true,          // Allow importing JSON files.
+    "isolatedModules": true,            // Treat each file as a separate module.
+    "noEmit": false,                    // Enable emitting of compiled files.
+    "outDir": "./build",                // Specify the output directory for compiled files.
+    "jsx": "react-jsx"                  // Use React JSX transformation.
   },
   "include": [
-    "src"
+    "src"                                // Include all files in the src directory.
   ]
 }
