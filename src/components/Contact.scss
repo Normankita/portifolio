@@ -136,3 +136,12 @@
       }
       
   }
+
+  @media screen {
+    @media (max-width: 768px) {
+      .user-box input{
+        width: 100%;
+      }
+      }
+    }
+  
