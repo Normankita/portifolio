@@ -35,7 +35,6 @@ function Contact() {
       };
 
       console.log(senderParams);
-      if (process.env.REACT_APP_SID && process.env.REACT_APP_TID && process.env.REACT_APP_TOKEN) {
         emailjs.send(
           'service_sum1g1d',  
           'template_8r4uhqe' ,
@@ -50,9 +49,7 @@ function Contact() {
             console.log('FAILED...', err);
           }
         );
-      } else {
-        console.error('Missing required environment variables.');
-      }
+      
       
       setName('');
       setEmail('');
