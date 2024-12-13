@@ -39,7 +39,7 @@ function Contact() {
         emailjs.send(
           process.env.REACT_APP_SID ?? '',  // Provide a fallback empty string
           process.env.REACT_APP_TID ?? '',
-          senderParams,
+          senderParams, 
           process.env.REACT_APP_TOKEN ?? ''
         )
         .then(
