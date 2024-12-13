@@ -37,10 +37,10 @@ function Contact() {
       console.log(senderParams);
       if (process.env.REACT_APP_SID && process.env.REACT_APP_TID && process.env.REACT_APP_TOKEN) {
         emailjs.send(
-          process.env.REACT_APP_SID ?? '',  // Provide a fallback empty string
-          process.env.REACT_APP_TID ?? '',
+          'service_sum1g1d',  
+          'template_8r4uhqe' ,
           senderParams, 
-          process.env.REACT_APP_TOKEN ?? ''
+          '8JiEjPycLrJZYc2KD'
         )
         .then(
           (response) => {
