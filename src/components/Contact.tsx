@@ -35,7 +35,7 @@ function Contact() {
       };
 
       console.log(templateParams);
-      emailjs.send('service_sum1g1d', 'template_8r4uhqe', templateParams, '8JiEjPycLrJZYc2KD').then(
+      emailjs.send(process.env.REACT_APP_SID, process.env.REACT_APP_TID, templateParams, process.env.REACT_APP_TOKEN).then(
         (response) => {
           console.log('SUCCESS!', response.status, response.text);
         },
