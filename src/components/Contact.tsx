@@ -28,21 +28,31 @@ function Contact() {
     /* Uncomment below if you want to enable the emailJS */
 
     if (name !== '' && email !== '' && message !== '') {
-      var templateParams = {
+      var senderParams = {
         name: name,
         email: email,
         message: message
       };
 
-      console.log(templateParams);
-      emailjs.send(process.env.REACT_APP_SID, process.env.REACT_APP_TID, templateParams, process.env.REACT_APP_TOKEN).then(
-        (response) => {
-          console.log('SUCCESS!', response.status, response.text);
-        },
-        (error) => {
-          console.log('FAILED...', error);
-        },
-      );
+      console.log(senderParams);
+      if (process.env.REACT_APP_SID && process.env.REACT_APP_TID && process.env.REACT_APP_TOKEN) {
+        emailjs.send(
+          process.env.REACT_APP_SID, 
+          process.env.REACT_APP_TID, 
+          senderParams, 
+          process.env.REACT_APP_TOKEN
+        ).then(
+          (response) => {
+            console.log('SUCCESS!', response.status, response.text);
+          },
+          (err) => {
+            console.log('FAILED...', err);
+          }
+        );
+      } else {
+        console.error('Missing required environment variables.');
+      }
+      
       setName('');
       setEmail('');
       setMessage('');
