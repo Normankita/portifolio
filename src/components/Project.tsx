@@ -13,16 +13,6 @@ function Project() {
         <h1>Personal Projects</h1>
         <div className="projects-grid">
             <div className="project">
-                <a href="https://github.com/norman-kita/ieee-802.1x-implementation" target="_blank" rel="noreferrer"><img src={mock10} className="zoom" alt="thumbnail" width="100%"/></a>
-                <a href="https://github.com/norman-kita/ieee-802.1x-implementation" target="_blank" rel="noreferrer"><h2>IEEE 802.1x Implementation</h2></a>
-                <p>Developed and tested a secure port-based authentication protocol for VLANs using Cisco switches and Active Directory.</p>
-            </div>
-            <div className="project">
-                <a href="https://github.com/Normankita/TMH" target="_blank" rel="noreferrer"><img src={mock09} className="zoom" alt="thumbnail" width="100%"/></a>
-                <a href="https://github.com/norman-kita/reservation-system" target="_blank" rel="noreferrer"><h2>Reservation System</h2></a>
-                <p>Created a booking and reservation system for an apartment business using PHP, Yii Framework, and MySQL database integration.</p>
-            </div>
-            <div className="project">
                 <a href="https://norzahcinema.netlify.app/" target="_blank" rel="noreferrer"><img src={mock08} className="zoom" alt="thumbnail" width="100%"/></a>
                 <a href="https://github.com/norman-kita/laravel-intro-project" target="_blank" rel="noreferrer"><h2>NorZah Cinema</h2></a>
                 <p>Integrates the TMDB API for dynamic movie and TV show data fetching, including search and trending features. It uses a responsive design for a seamless user experience across devices. React efficiently manages state and renders content without reloading, enhancing interactivity and performance..</p>
@@ -41,6 +31,16 @@ function Project() {
                 <a href="https://github.com/norman-kita/data-visualization-dashboard" target="_blank" rel="noreferrer"><img src={mock01} className="zoom" alt="thumbnail" width="100%"/></a>
                 <a href="https://github.com/norman-kita/data-visualization-dashboard" target="_blank" rel="noreferrer"><h2>Word Counter</h2></a>
                 <p>Created a real-time copy and paste or write your own editor that helps you count words and characters within text</p>
+            </div>
+            <div className="project">
+                <a href="https://github.com/Normankita/TMH" target="_blank" rel="noreferrer"><img src={mock09} className="zoom" alt="thumbnail" width="100%"/></a>
+                <a href="https://github.com/norman-kita/reservation-system" target="_blank" rel="noreferrer"><h2>Reservation System</h2></a>
+                <p>Created a booking and reservation system for an apartment business using PHP, Yii Framework, and MySQL database integration.</p>
+            </div>
+            <div className="project">
+                <a href="https://github.com/norman-kita/ieee-802.1x-implementation" target="_blank" rel="noreferrer"><img src={mock10} className="zoom" alt="thumbnail" width="100%"/></a>
+                <a href="https://github.com/norman-kita/ieee-802.1x-implementation" target="_blank" rel="noreferrer"><h2>IEEE 802.1x Implementation</h2></a>
+                <p>Developed and tested a secure port-based authentication protocol for VLANs using Cisco switches and Active Directory.</p>
             </div>
         </div>
     </div>
