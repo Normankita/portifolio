@@ -45,7 +45,7 @@ function Expertise() {
                 <div className="skills-grid">
                     <div className="skill">
                         <FontAwesomeIcon icon={faReact} size="3x"/>
-                        <h3>Frontend Web Development</h3>
+                        <h3>Programming & Web Development</h3>
                         <p>I have developed various web applications using modern technologies such as React and PHP, specializing in frontend development with a strong grasp of SDLC processes.</p>
                         <div className="flex-chips">
                             <span className="chip-title">Tech stack:</span>
