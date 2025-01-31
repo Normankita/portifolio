@@ -14,7 +14,7 @@ function Project() {
         <div className="projects-grid">
             <div className="project">
                 <a href="https://norzahcinema.netlify.app/" target="_blank" rel="noreferrer"><img src={mock08} className="zoom" alt="thumbnail" width="100%"/></a>
-                <a href="https://github.com/norman-kita/laravel-intro-project" target="_blank" rel="noreferrer"><h2>NorZah Cinema</h2></a>
+                <a href="https://norzahcinema.netlify.app/" target="_blank" rel="noreferrer"><h2>NorZah Cinema</h2></a>
                 <p>Integrates the TMDB API for dynamic movie and TV show data fetching, including search and trending features. It uses a responsive design for a seamless user experience across devices. React efficiently manages state and renders content without reloading, enhancing interactivity and performance..</p>
             </div>
             <div className="project">
@@ -23,8 +23,8 @@ function Project() {
                 <p>Web app to help you track your schedules and daily activities so you don't miss out any. utilizez local storage and state management utilities</p>
             </div>
             <div className="project">
-                <a href="https://norzah-ecommerce.netlify.app/" target="_blank" rel="noreferrer"><img src={mock06} className="zoom" alt="thumbnail" width="100%"/></a>
-                <a href="https://norzah-ecommerce.netlify.app/" target="_blank" rel="noreferrer"><h2>NorZah E-Commerce</h2></a>
+                <a href="https://norzah-ecommerce.vercel.app/" target="_blank" rel="noreferrer"><img src={mock06} className="zoom" alt="thumbnail" width="100%"/></a>
+                <a href="https://norzah-ecommerce.vercel.app/" target="_blank" rel="noreferrer"><h2>NorZah E-Commerce</h2></a>
                 <p>Created a real-time E-commerce web application to demonstrate online purchases, powered by react and expressjs.</p>
             </div>
             <div className="project">
