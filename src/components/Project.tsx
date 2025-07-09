@@ -1,4 +1,3 @@
-import React from "react";
 import mock01 from "../assets/images/mock01.png";
 import mock06 from "../assets/images/mock06.png";
 import mock07 from "../assets/images/mock07.png";
@@ -6,6 +5,7 @@ import mock08 from "../assets/images/mock08.png";
 import mock09 from "../assets/images/mock09.png";
 import mock10 from "../assets/images/mock10.png";
 import tableComponentImage from "../assets/images/table-component.jpeg";
+import mzumbeFyp from "../assets/images/mzumbe-fyp-portal.jpeg";
 import "../assets/styles/Project.scss";
 
 function Project() {
@@ -144,6 +144,30 @@ function Project() {
             <b>pagination</b>, <b>skeleton loading</b>, field transformations,
             and optional per-row actions. Ideal for dashboards and data-rich
             UIs.
+          </p>
+        </div>
+        <div className="project">
+          <a
+            href="https://fyp-mzumbe.vercel.app/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img
+              src={tableComponentImage}
+              className="zoom"
+              alt="thumbnail"
+              width="100%"
+            />
+          </a>
+          <a
+            href="https://fyp-mzumbe.vercel.app/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <h2>Mzumbe FYP Management Portal</h2>
+          </a>
+          <p>
+            Online project summission and tracking portal to ease project supervision and management at mzumbe university. integrated with MOU
           </p>
         </div>
         <div className="project">
