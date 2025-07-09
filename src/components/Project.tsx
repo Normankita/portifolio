@@ -153,7 +153,7 @@ function Project() {
             rel="noreferrer"
           >
             <img
-              src={tableComponentImage}
+              src={mzumbeFyp}
               className="zoom"
               alt="thumbnail"
               width="100%"
