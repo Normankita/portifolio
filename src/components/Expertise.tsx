@@ -8,16 +8,29 @@ import Chip from '@mui/material/Chip';
 import '../assets/styles/Expertise.scss';
 
 const labelsFirst = [
-    "C++",
-    "Python",
-    "PHP",
-    "JavaScript",
-    "React",
-    "HTML5",
-    "CSS",
-    "SQL",
-    "Java",
-    "Yii2"
+     // Core Programming Languages
+  "C++",
+  "Python",
+  "PHP",
+  "JavaScript",
+  "Java",
+  "SQL",
+
+  // Web & Frontend Development
+  "HTML5",
+  "CSS",
+  "React",
+  "Redux",
+  "Redux Toolkit",
+
+  // Backend & Frameworks
+  "Laravel",
+  "Yii2",
+  "Firebase",
+
+  // Other Skills
+  "RESTful API Integration",
+  "Database Design & Management"
 ];
 
 const labelsSecond = [
