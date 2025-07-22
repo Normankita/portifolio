@@ -12,16 +12,30 @@ function Timeline() {
       <div className="items-container">
         <h1>Career History</h1>
         <VerticalTimeline>
+                  <VerticalTimelineElement
+            className="vertical-timeline-element--work"
+            contentStyle={{ background: 'white', color: 'rgb(39, 40, 34)' }}
+            contentArrowStyle={{ borderRight: '7px solid  white' }}
+            date="July 2025 - Current"
+            iconStyle={{ background: '#5000ca', color: 'rgb(39, 40, 34)' }}
+            icon={<FontAwesomeIcon icon={faBriefcase} />}
+          >
+            <h3 className="vertical-timeline-element-title">ICT Officer</h3>
+            <h4 className="vertical-timeline-element-subtitle">PSSSF HQ </h4>
+            <p>
+              working hard in providing seamless IT Solutions integration and maintaining the current project under usage of the org 
+            </p>
+          </VerticalTimelineElement>
         <VerticalTimelineElement
             className="vertical-timeline-element--work"
             contentStyle={{ background: 'white', color: 'rgb(39, 40, 34)' }}
             contentArrowStyle={{ borderRight: '7px solid  white' }}
-            date="March 2025 - Current"
+            date="March 2025 - June 2025"
             iconStyle={{ background: '#5000ca', color: 'rgb(39, 40, 34)' }}
             icon={<FontAwesomeIcon icon={faBriefcase} />}
           >
             <h3 className="vertical-timeline-element-title">Software Developer</h3>
-            <h4 className="vertical-timeline-element-subtitle">Freelance </h4>
+            <h4 className="vertical-timeline-element-subtitle">TodaySky </h4>
             <p>
               Providing seamless IT Solutions integration and transforming innovative ideas into real world projects. One line of code at a time
             </p>
