@@ -50,23 +50,22 @@ function Contact() {
         <div className="contact_wrapper">
           <h1>Contact Me</h1>
           <p>Got a project waiting to be realized? Let's collaborate and make it happen!</p>
-          <form onSubmit={sendEmail}className='form-flex user-box'>
-            <div  className=''>
-              <input required type="text" name='name'  placeholder="What's your name?" value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                }} />
-              <input type="email" required placeholder='email' value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}/>
-            
-            <textarea name="" placeholder="Send me any inquiries or" value={message}
-              onChange={(e) => {
-                setMessage(e.target.value);
-              }}></textarea>
+          <form onSubmit={sendEmail} className='form-flex user-box'>
+            <div className='inputs-row'>
+              <div className='input-field'>
+                <input required type="text" name='name' placeholder="What's your name?" value={name}
+                  onChange={(e) => setName(e.target.value)} />
+              </div>
+              <div className='input-field'>
+                <input type="email" required placeholder='Your email' value={email}
+                  onChange={(e) => setEmail(e.target.value)} />
+              </div>
             </div>
-            <button className='butt'>Send {<SendIcon/>}</button>
+            <div className='textarea-field'>
+              <textarea placeholder="Your message..." value={message}
+                onChange={(e) => setMessage(e.target.value)} />
+            </div>
+            <button className='butt'>Send <SendIcon /></button>
           </form>
         </div>
       </div>

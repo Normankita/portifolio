@@ -1,38 +1,143 @@
-.vertical-timeline span {
-    color: white;
-    font-family: 'Courier Prime', monospace;
+// ── Timeline connector line ────────────────────────────────────────────────
+.vertical-timeline::before {
+    width: 2px !important;
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(80, 0, 202, 0.35) 15%,
+        rgba(80, 0, 202, 0.35) 85%,
+        transparent 100%
+    ) !important;
 }
 
-.vertical-timeline p {
-    color: rgb(39, 40, 34);
+// ── Icon circle ────────────────────────────────────────────────────────────
+.vertical-timeline-element-icon {
+    box-shadow:
+        0 0 0 3px rgba(80, 0, 202, 0.25),
+        0 0 18px rgba(80, 0, 202, 0.45) !important;
+    transition: box-shadow 0.3s ease;
+
+    .svg-inline--fa {
+        color: white;
+    }
 }
 
-.vertical-timeline-element p {
-    color: rgb(39, 40, 34);
+.vertical-timeline-element:hover .vertical-timeline-element-icon {
+    box-shadow:
+        0 0 0 4px rgba(80, 0, 202, 0.4),
+        0 0 28px rgba(80, 0, 202, 0.65) !important;
 }
 
-.vertical-timeline-element h3 {
-    color: rgb(39, 40, 34);
+// ── Card ───────────────────────────────────────────────────────────────────
+.vertical-timeline-element-content {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-top: 2px solid rgba(80, 0, 202, 0.55) !important;
+    border-radius: 14px !important;
+    box-shadow: none !important;
+    padding: 22px 26px 20px !important;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 36px rgba(80, 0, 202, 0.22) !important;
+        border-color: rgba(80, 0, 202, 0.35) !important;
+        border-top-color: rgba(80, 0, 202, 0.8) !important;
+    }
 }
 
-.vertical-timeline-element h4 {
-    color: rgb(39, 40, 34);
+.vertical-timeline-element-content-arrow {
+    border-right-color: rgba(255, 255, 255, 0.04) !important;
+    top: 20px !important;
 }
 
-.vertical-timeline-element span {
-    color: rgb(39, 40, 34);
+// ── Typography inside cards ────────────────────────────────────────────────
+.vertical-timeline-element-content h3 {
+    color: #fff !important;
+    font-size: 1.05rem !important;
+    font-weight: 700 !important;
+    margin: 0 0 4px !important;
 }
 
-.vertical-timeline-element .vertical-timeline-element-date {
-    color: white;
+.vertical-timeline-element-content h4 {
+    color: rgba(167, 139, 250, 0.85) !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    margin: 0 0 12px !important;
+    letter-spacing: 0.02em;
 }
 
-.svg-inline--fa {
-    color: white;
+.vertical-timeline-element-content p {
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-size: 0.9rem !important;
+    line-height: 1.65 !important;
+    margin: 0 !important;
 }
 
+// ── Date ───────────────────────────────────────────────────────────────────
+.vertical-timeline-element-date {
+    color: rgba(255, 255, 255, 0.45) !important;
+    font-family: "Lato", sans-serif !important;
+    font-size: 0.82rem !important;
+    letter-spacing: 0.02em;
+    padding: 0 16px !important;
+}
+
+// ── Light mode ─────────────────────────────────────────────────────────────
+.light-mode {
+    .vertical-timeline::before {
+        background: linear-gradient(
+            to bottom,
+            transparent 0%,
+            rgba(80, 0, 202, 0.25) 15%,
+            rgba(80, 0, 202, 0.25) 85%,
+            transparent 100%
+        ) !important;
+    }
+
+    .vertical-timeline-element-content {
+        background: #fff !important;
+        border-color: rgba(0, 0, 0, 0.07) !important;
+        border-top-color: #5000ca !important;
+        box-shadow: 0 2px 18px rgba(0, 0, 0, 0.07) !important;
+
+        &:hover {
+            box-shadow: 0 10px 36px rgba(80, 0, 202, 0.14) !important;
+            border-color: rgba(80, 0, 202, 0.2) !important;
+            border-top-color: #5000ca !important;
+        }
+    }
+
+    .vertical-timeline-element-content-arrow {
+        border-right-color: #fff !important;
+    }
+
+    .vertical-timeline-element-content h3 {
+        color: #0d1116 !important;
+    }
+
+    .vertical-timeline-element-content h4 {
+        color: #5000ca !important;
+    }
+
+    .vertical-timeline-element-content p {
+        color: rgba(13, 17, 22, 0.72) !important;
+    }
+
+    .vertical-timeline-element-date {
+        color: rgba(0, 0, 0, 0.45) !important;
+    }
+}
+
+// ── Responsive: date moves inside card ────────────────────────────────────
 @media screen and (max-width: 1170px) {
-    .vertical-timeline-element .vertical-timeline-element-date {
-        color: rgb(39, 40, 34);
+    .vertical-timeline-element-date {
+        color: rgba(255, 255, 255, 0.45) !important;
+        padding: 6px 0 0 !important;
+        font-size: 0.78rem !important;
+    }
+
+    .light-mode .vertical-timeline-element-date {
+        color: rgba(0, 0, 0, 0.45) !important;
     }
 }

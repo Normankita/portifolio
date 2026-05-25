@@ -16,7 +16,11 @@ code {
 .main-container {
   position: relative;
   background-color: #0d1116;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
 
+p, a, h1, h2, h3, h4, h5, label, button, span, input, textarea, svg {
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, fill 0.3s ease;
 }
 
 a {
@@ -36,6 +40,7 @@ p, a, h1, h2, h3, h4, h5, label, button {
 .navigation-bar {
   justify-content: space-between;
   background-color: #0d1116;
+  transition: background-color 0.4s ease;
 
   button {
     font-size: 1.1rem;

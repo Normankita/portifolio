@@ -1,147 +1,165 @@
 .user-box {
     display: flex;
-    justify-content: center; /* Horizontal alignment */
-    align-items: center;    /* Vertical alignment */
-    height: 100vh;          /* Ensure the container has a height */
-  }
-  .contain{
-    position: relative;
-  }
-  .butt{background: transparent;
-    border-radius: 15%;
-    padding: 5px;
-    border: transparent;
-    cursor: pointer;
-    transition: all 1s;
-}
-.butt:hover{
-    background: grey;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
 }
 
-  
-  .user-box input {
-    width: 48%;
-    margin: 5px;
-    padding: 10px 0;
-    font-size: 16px;
-    color: #fff;
-    margin-bottom: 30px;
-    border: none;
-    border-bottom: 1px solid #fff;
-    outline: none;
-    background: transparent;
-  }
-  .user-box label {
-    position: absolute;
-    top:0;
-    left: 0;
-    padding: 10px 0;
-    font-size: 16px;
-    color: #fff;
-    pointer-events: none;
-    transition: .5s;
-  }
-  .user-box textarea {
+.inputs-row {
+    display: flex;
+    gap: 12px;
     width: 100%;
-    height: 200px;
-    padding: 10px;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
+.input-field,
+.textarea-field {
+    position: relative;
+    flex: 1;
+    width: 100%;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: #5000ca;
+        border-radius: 2px;
+        transition: width 0.35s ease, left 0.35s ease;
+    }
+
+    &:focus-within::after {
+        width: 100%;
+        left: 0;
+    }
+}
+
+.textarea-field::after {
+    bottom: 30px;
+}
+
+.user-box input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 0;
     font-size: 16px;
     color: #fff;
     margin-bottom: 30px;
     border: none;
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
     outline: none;
     background: transparent;
-  }
-  
-   .user-box input:focus ~ label,
-  .user-box input:valid ~ label {
-    top: -20px;
-    left: 0;
-    color: #03e9f4;
-    font-size: 12px;
-  }
-  
- form a {
-    // position: relative;
-    display: inline-block;
-    padding: 10px 20px;
-    color: #03e9f4;
-    font-size: 16px;
-    text-decoration: none;
-    text-transform: uppercase;
-    overflow: hidden;
-    transition: .5s;
-    margin-top: 40px;
-    letter-spacing: 4px
-  }
-  
-  .light-mode{
-    .user-box input {
-        width: 48%;
-        margin-left: 5px;
-        margin-right: 5px;
-        padding: 10px 0;
-        font-size: 16px;
-        color: #151111;
-        margin-bottom: 30px;
-        border: none;
-        border-bottom: 1px solid #1a1414;
-        outline: none;
-        background: transparent;
-      }
-      .user-box label {
-        position: absolute;
-        top:0;
-        left: 0;
-        padding: 10px 0;
-        font-size: 16px;
-        color: #262121;
-        pointer-events: none;
-        transition: .5s;
-      }
-      .user-box textarea {
-        width: 100%;
-        height: 200px;
-        padding: 10px;
-        font-size: 16px;
-        color: #141111;
-        margin-bottom: 30px;
-        border: none;
-        border-bottom: 1px solid #120e0e;
-        outline: none;
-        background: transparent;
-      }
-      
-       .user-box input:focus ~ label,
-      .user-box input:valid ~ label {
-        top: -20px;
-        left: 0;
-        color: #0d1616;
-        font-size: 12px;
-      }
-      
-     form a {
-        // position: relative;
-        display: inline-block;
-        padding: 10px 20px;
-        color: #0d1818;
-        font-size: 16px;
-        text-decoration: none;
-        text-transform: uppercase;
-        overflow: hidden;
-        transition: .5s;
-        margin-top: 40px;
-        letter-spacing: 4px
-      }
-      
-  }
+    transition: border-bottom-color 0.3s ease, color 0.3s ease;
 
-  @media screen {
-    @media (max-width: 768px) {
-      .user-box input{
-        width: 100%;
-      }
-      }
+    &:focus {
+        border-bottom-color: rgba(255, 255, 255, 0.6);
     }
-  
+
+    &::placeholder {
+        opacity: 0.45;
+        transition: opacity 0.3s ease;
+    }
+
+    &:focus::placeholder {
+        opacity: 0.25;
+    }
+}
+
+.user-box textarea {
+    width: 100%;
+    box-sizing: border-box;
+    height: 180px;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    outline: none;
+    background: transparent;
+    resize: none;
+    transition: border-bottom-color 0.3s ease, color 0.3s ease;
+
+    &:focus {
+        border-bottom-color: rgba(255, 255, 255, 0.6);
+    }
+
+    &::placeholder {
+        opacity: 0.45;
+        transition: opacity 0.3s ease;
+    }
+
+    &:focus::placeholder {
+        opacity: 0.25;
+    }
+}
+
+.butt {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 10px 24px;
+    cursor: pointer;
+    color: white;
+    font-size: 1rem;
+    font-family: "Lato", sans-serif;
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+
+    &:hover {
+        background: rgba(80, 0, 202, 0.15);
+        border-color: #5000ca;
+        box-shadow: 0 0 16px rgba(80, 0, 202, 0.25);
+        transform: translateY(-1px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    svg {
+        font-size: 1.1em;
+    }
+}
+
+.light-mode {
+    .user-box input {
+        color: #0d1116;
+        border-bottom-color: rgba(0, 0, 0, 0.2);
+
+        &:focus {
+            border-bottom-color: rgba(0, 0, 0, 0.5);
+        }
+
+        &::placeholder {
+            color: #0d1116;
+        }
+    }
+
+    .user-box textarea {
+        color: #0d1116;
+        border-bottom-color: rgba(0, 0, 0, 0.2);
+
+        &:focus {
+            border-bottom-color: rgba(0, 0, 0, 0.5);
+        }
+
+        &::placeholder {
+            color: #0d1116;
+        }
+    }
+
+    .butt {
+        color: #0d1116;
+        border-color: rgba(0, 0, 0, 0.2);
+    }
+}

@@ -8,27 +8,22 @@ import Chip from '@mui/material/Chip';
 import '../assets/styles/Expertise.scss';
 
 const labelsFirst = [
-     // Core Programming Languages
-  "C++",
+  "JavaScript",
   "Python",
   "PHP",
-  "JavaScript",
-  "Java",
-  "SQL",
-
-  // Web & Frontend Development
-  "HTML5",
-  "CSS",
   "React",
+  "Django",
+  "PostgreSQL",
+  "MySQL",
+  "HTML5",
+  "CSS3",
+  "Tailwind CSS",
   "Redux",
-  "Redux Toolkit",
-
-  // Backend & Frameworks
   "Laravel",
   "Yii2",
   "Firebase",
-
-  // Other Skills
+  "Git",
+  "Postman",
   "RESTful API Integration",
   "Database Design & Management"
 ];
@@ -59,7 +54,7 @@ function Expertise() {
                     <div className="skill">
                         <FontAwesomeIcon icon={faReact} size="3x"/>
                         <h3>Programming & Web Development</h3>
-                        <p>I have developed various web applications using modern technologies such as React and PHP, specializing in frontend development with a strong grasp of SDLC processes.</p>
+                        <p>Full-stack developer focused on backend-heavy systems — database design, business logic, and integrations — while building clean, maintainable frontends. Comfortable across the stack from REST APIs to reactive UIs.</p>
                         <div className="flex-chips">
                             <span className="chip-title">Tech stack:</span>
                             {labelsFirst.map((label, index) => (

@@ -30,7 +30,7 @@ function App() {
     <div className={`main-container ${mode === 'dark' ? 'dark-mode' : 'light-mode'}`}>
         <Navigation parentToChild={{mode}} modeChange={handleModeChange}/>
         <FadeIn transitionDuration={700}>
-            <Main/>
+            <Main mode={mode}/>
             <Expertise/>
             <Timeline/>
             <Project/>
