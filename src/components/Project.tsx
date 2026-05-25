@@ -1,12 +1,7 @@
-import mock01 from "../assets/images/mock01.png";
-import mock06 from "../assets/images/mock06.png";
-import mock07 from "../assets/images/mock07.png";
-import mock08 from "../assets/images/mock08.png";
 import mock09 from "../assets/images/mock09.png";
 import mock10 from "../assets/images/mock10.png";
-import tableComponentImage from "../assets/images/table-component.jpeg";
-import mzumbeFyp from "../assets/images/mzumbe-fyp-portal.jpeg";
 import "../assets/styles/Project.scss";
+import IframePreview from "./IframePreview";
 
 function Project() {
   return (
@@ -14,18 +9,13 @@ function Project() {
       <h1>Personal Projects</h1>
       <div className="projects-grid">
         <div className="project">
-          <a
+          <IframePreview
+            src="https://norzahcinema.netlify.app/"
+            title="NorZah Cinema preview"
             href="https://norzahcinema.netlify.app/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img src={mock08} className="zoom" alt="thumbnail" width="100%" />
-          </a>
-          <a
-            href="https://norzahcinema.netlify.app/"
-            target="_blank"
-            rel="noreferrer"
-          >
+            label="Open NorZah Cinema"
+          />
+          <a href="https://norzahcinema.netlify.app/" target="_blank" rel="noreferrer">
             <h2>NorZah Cinema</h2>
           </a>
           <p>
@@ -37,18 +27,13 @@ function Project() {
           </p>
         </div>
         <div className="project">
-          <a
+          <IframePreview
+            src="https://norzah-todo.netlify.app/"
+            title="NorZah CPRTask preview"
             href="https://norzah-todo.netlify.app/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img src={mock07} className="zoom" alt="thumbnail" width="100%" />
-          </a>
-          <a
-            href="https://norzah-todo.netlify.app/"
-            target="_blank"
-            rel="noreferrer"
-          >
+            label="Open NorZah CPRTask"
+          />
+          <a href="https://norzah-todo.netlify.app/" target="_blank" rel="noreferrer">
             <h2>NorZah CPRTask</h2>
           </a>
           <p>
@@ -58,18 +43,13 @@ function Project() {
           </p>
         </div>
         <div className="project">
-          <a
+          <IframePreview
+            src="https://norzah-ecommerce.vercel.app/"
+            title="NorZah E-Commerce preview"
             href="https://norzah-ecommerce.vercel.app/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img src={mock06} className="zoom" alt="thumbnail" width="100%" />
-          </a>
-          <a
-            href="https://norzah-ecommerce.vercel.app/"
-            target="_blank"
-            rel="noreferrer"
-          >
+            label="Open NorZah E-Commerce"
+          />
+          <a href="https://norzah-ecommerce.vercel.app/" target="_blank" rel="noreferrer">
             <h2>NorZah E-Commerce</h2>
           </a>
           <p>
@@ -78,18 +58,13 @@ function Project() {
           </p>
         </div>
         <div className="project">
-          <a
+          <IframePreview
+            src="https://wordcount-norzah.netlify.app/"
+            title="Word Counter preview"
             href="https://wordcount-norzah.netlify.app/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img src={mock01} className="zoom" alt="thumbnail" width="100%" />
-          </a>
-          <a
-            href="https://wordcount-norzah.netlify.app/"
-            target="_blank"
-            rel="noreferrer"
-          >
+            label="Open Word Counter"
+          />
+          <a href="https://wordcount-norzah.netlify.app/" target="_blank" rel="noreferrer">
             <h2>Word Counter</h2>
           </a>
           <p>
@@ -98,18 +73,10 @@ function Project() {
           </p>
         </div>
         <div className="project">
-          <a
-            href="https://github.com/Normankita/TMH"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="https://github.com/Normankita/TMH" target="_blank" rel="noreferrer">
             <img src={mock09} className="zoom" alt="thumbnail" width="100%" />
           </a>
-          <a
-            href="https://github.com/Normankita/TMH"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="https://github.com/Normankita/TMH" target="_blank" rel="noreferrer">
             <h2>Reservation System</h2>
           </a>
           <p>
@@ -118,23 +85,13 @@ function Project() {
           </p>
         </div>
         <div className="project">
-          <a
+          <IframePreview
+            src="https://components-demo-hazel.vercel.app/table"
+            title="Awesome Table Component preview"
             href="https://components-demo-hazel.vercel.app/table"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img
-              src={tableComponentImage}
-              className="zoom"
-              alt="thumbnail"
-              width="100%"
-            />
-          </a>
-          <a
-            href="https://components-demo-hazel.vercel.app/table"
-            target="_blank"
-            rel="noreferrer"
-          >
+            label="Open Awesome Table Component"
+          />
+          <a href="https://components-demo-hazel.vercel.app/table" target="_blank" rel="noreferrer">
             <h2>Awesome Table Component</h2>
           </a>
           <p>
@@ -147,23 +104,13 @@ function Project() {
           </p>
         </div>
         <div className="project">
-          <a
+          <IframePreview
+            src="https://fyp-mzumbe.vercel.app/"
+            title="Mzumbe FYP Management Portal preview"
             href="https://fyp-mzumbe.vercel.app/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img
-              src={mzumbeFyp}
-              className="zoom"
-              alt="thumbnail"
-              width="100%"
-            />
-          </a>
-          <a
-            href="https://fyp-mzumbe.vercel.app/"
-            target="_blank"
-            rel="noreferrer"
-          >
+            label="Open Mzumbe FYP Management Portal"
+          />
+          <a href="https://fyp-mzumbe.vercel.app/" target="_blank" rel="noreferrer">
             <h2>Mzumbe FYP Management Portal</h2>
           </a>
           <p>

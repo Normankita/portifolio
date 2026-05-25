@@ -25,9 +25,21 @@
     transition: transform .2s;
     margin: 0 auto;
 }
-  
+
 .zoom:hover {
     transform: scale(1.05);
+}
+
+.project-preview-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    cursor: pointer;
+    transition: background .2s;
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.06);
+    }
 }
 
 @media screen {
