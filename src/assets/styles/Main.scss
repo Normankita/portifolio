@@ -12,7 +12,12 @@
 }
 
 .light-mode .tagline {
-    color: #5000ca;
+    background: linear-gradient(90deg, #5000ca, #7c3aed, #6d28d9, #5000ca);
+    background-size: 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient-flow 4s linear infinite;
 }
 
 @keyframes gradient-flow {
@@ -22,17 +27,34 @@
 
 .about-section {
     display: flex;
-    gap: 30px;
-    justify-content: flex-start;
+    flex-direction: column;
+    gap: 40px;
+    justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 0px 15%;
+    padding: 100px 15% 50px;
     min-height: 700px;
     background-image: url("../images/bg-dark.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
+}
+
+.profile-container {
+    display: flex;
+    gap: 30px;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+.spotify-float-section {
+    width: 75%;
+    max-width: 900px;
+    margin: 10px auto 0;
+    position: relative;
+    z-index: 10;
 }
 
 .about-section .content {
@@ -77,18 +99,25 @@
     }
 }
 
-.spotify-section {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 24px 15% 48px;
-}
+
 
 .about-section .image-wrapper {
     z-index: 2;
     img {
-        width: 150px;
+        width: 200px;
         border-radius: 50%;
+        box-shadow:
+            0 0 0 3px rgba(80, 0, 202, 0.35),
+            0 0 0 6px rgba(80, 0, 202, 0.12),
+            0 8px 32px rgba(80, 0, 202, 0.3);
+        transition: box-shadow 0.3s ease;
+
+        &:hover {
+            box-shadow:
+                0 0 0 3px rgba(80, 0, 202, 0.6),
+                0 0 0 6px rgba(80, 0, 202, 0.2),
+                0 8px 40px rgba(80, 0, 202, 0.5);
+        }
     }
 }
 
@@ -175,6 +204,16 @@
             padding-right: 0px;
         }
 
+        .profile-container {
+            display: block;
+        }
+
+        .spotify-float-section {
+            width: 90%;
+            padding: 0 0 40px;
+            margin-top: 10px;
+        }
+
         .about-section .content {
             width: 90%;
             padding-left: 5%;
@@ -187,9 +226,8 @@
             width: 100%;
         }
 
-        .spotify-section {
-            padding-left: 5%;
-            padding-right: 5%;
+        .about-section .image-wrapper img {
+            width: 160px;
         }
     }
 }

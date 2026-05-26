@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(table)",
-      "Bash(mzumbe\")"
+      "Bash(mzumbe\")",
+      "PowerShell(New-Item -ItemType Directory -Force -Path \"e:\\\\Users\\\\kitan\\\\Documents\\\\Personal\\\\portifolio\\\\api\")"
     ]
   }
 }

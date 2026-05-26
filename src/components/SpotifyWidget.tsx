@@ -1,45 +1,131 @@
+import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 import "../assets/styles/SpotifyWidget.scss";
 
-const BASE = "https://spotify-github-profile.kittinanx.com/api/view?uid=317m2vyqcjzo44xkxyf4q73sa2iu";
-const REDIRECT = `${BASE}&redirect=true`;
-
-function embedUrl(isDark: boolean) {
-  const bg = isDark ? "0d1116" : "f8f9fa";
-  const mode = isDark ? "dark" : "light";
-  return `${BASE}&cover_image=true&theme=spotify-embed&show_offline=true&background_color=${bg}&interchange=true&profanity=true&mode=${mode}&bar_color=5000ca&bar_color_cover=false`;
+interface NowPlaying {
+  isPlaying: boolean;
+  title?: string;
+  artist?: string;
+  album?: string;
+  albumArt?: string;
+  songUrl?: string;
+  progress?: number;
+  duration?: number;
 }
 
-interface Props {
-  mode: string;
+function formatMs(ms: number): string {
+  const s = Math.floor(ms / 1000);
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 }
 
-function SpotifyWidget({ mode }: Props) {
-  const isDark = mode === "dark";
+const EQ_BARS = 20;
+
+function SpotifyWidget() {
+  const [data, setData] = useState<NowPlaying>({ isPlaying: false });
+  const [loading, setLoading] = useState(true);
+  const [localProgress, setLocalProgress] = useState(0);
+
+  useEffect(() => {
+    async function poll() {
+      try {
+        const res = await fetch("/api/spotify");
+        const json: NowPlaying = await res.json();
+        setData(json);
+        setLocalProgress(json.progress ?? 0);
+      } catch {
+        setData({ isPlaying: false });
+      } finally {
+        setLoading(false);
+      }
+    }
+    poll();
+    const id = setInterval(poll, 30_000);
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    if (!data.isPlaying) return;
+    const id = setInterval(() => {
+      setLocalProgress((p) => {
+        const next = p + 1000;
+        return data.duration && next >= data.duration ? data.duration : next;
+      });
+    }, 1000);
+    return () => clearInterval(id);
+  }, [data.isPlaying, data.progress, data.duration]);
+
+  const progressPct =
+    data.duration && localProgress
+      ? Math.min((localProgress / data.duration) * 100, 100)
+      : 0;
+
+  const remaining = (data.duration ?? 0) - localProgress;
+
+  if (loading) {
+    return (
+      <div className="spotify-strip">
+        <div className="spotify-strip-skeleton">
+          <div className="skel-icon" />
+          <div className="skel-text" />
+        </div>
+      </div>
+    );
+  }
+
+  if (!data.isPlaying) {
+    return (
+      <div className="spotify-strip offline">
+        <div className="spotify-strip-header">
+          <FontAwesomeIcon icon={faSpotify} className="sp-icon" />
+          <span className="sp-label">Not playing right now</span>
+        </div>
+        <div className="spotify-eq-row">
+          <div className={`sp-eq paused`}>
+            {Array.from({ length: EQ_BARS }).map((_, i) => (
+              <span key={i} className="sp-bar" />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="spotify-card">
-      <div className="spotify-header">
-        <div className="soundwave">
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
-        </div>
-        <span className="now-playing-label">Currently Playing</span>
-      </div>
+    <div className="spotify-strip">
+      {/* Track info row — entire row is a link to open in Spotify */}
       <a
-        href={REDIRECT}
+        href={data.songUrl}
         target="_blank"
         rel="noreferrer"
-        className="spotify-embed-link"
+        className="spotify-strip-track"
       >
-        <img
-          src={embedUrl(isDark)}
-          alt="Spotify Now Playing"
-          className="spotify-embed-img"
-        />
+        <FontAwesomeIcon icon={faSpotify} className="sp-icon playing" />
+        <span className="sp-live-dot" />
+        <img src={data.albumArt} alt={data.album} className="sp-art" />
+        <span className="sp-title">{data.title}</span>
+        <span className="sp-sep">·</span>
+        <span className="sp-artist">{data.artist}</span>
       </a>
+
+      {/* Progress bar — full width with glow head */}
+      <div className="sp-progress-track">
+        <div
+          className="sp-progress-fill"
+          style={{ width: `${progressPct}%` }}
+        />
+      </div>
+
+      {/* Times + equalizer */}
+      <div className="sp-bottom-row">
+        <span className="sp-time">{formatMs(localProgress)}</span>
+        <div className="sp-eq playing">
+          {Array.from({ length: EQ_BARS }).map((_, i) => (
+            <span key={i} className="sp-bar" />
+          ))}
+        </div>
+        <span className="sp-time">-{formatMs(remaining)}</span>
+      </div>
     </div>
   );
 }
