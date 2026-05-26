@@ -11,8 +11,9 @@ try {
     });
 } catch {}
 
-const spotifyHandler    = require("./api/spotify");
-const spotifySvgHandler = require("./api/spotify-svg");
+const spotifyHandler         = require("./api/spotify");
+const spotifySvgHandler      = require("./api/spotify-svg");
+const vercelProjectsHandler  = require("./api/vercel-projects");
 
 function mockRes(res) {
   return {
@@ -32,6 +33,8 @@ const server = http.createServer(async (req, res) => {
     await spotifyHandler(req, mockRes(res));
   } else if (req.url === "/api/spotify-svg") {
     await spotifySvgHandler(req, mockRes(res));
+  } else if (req.url === "/api/vercel-projects") {
+    await vercelProjectsHandler(req, mockRes(res));
   } else {
     res.writeHead(404);
     res.end("Not found");

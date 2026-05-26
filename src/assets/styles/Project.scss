@@ -169,6 +169,70 @@
     }
 }
 
+// ── Skeleton loading ───────────────────────────────────────────────────────
+@keyframes skeleton-shimmer {
+    0%   { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+}
+
+%skeleton-base {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.04) 25%,
+        rgba(255, 255, 255, 0.09) 50%,
+        rgba(255, 255, 255, 0.04) 75%
+    );
+    background-size: 800px 100%;
+    animation: skeleton-shimmer 1.4s infinite linear;
+    border-radius: 6px;
+}
+
+.skeleton-card {
+    pointer-events: none;
+}
+
+.skeleton-preview {
+    @extend %skeleton-base;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: 0;
+}
+
+.skeleton-line {
+    @extend %skeleton-base;
+    height: 14px;
+    width: 100%;
+
+    &.skeleton-title {
+        height: 18px;
+        width: 55%;
+    }
+
+    &.skeleton-short {
+        width: 70%;
+    }
+}
+
+.skeleton-tag {
+    @extend %skeleton-base;
+    display: inline-block;
+    width: 54px;
+    height: 22px;
+    border-radius: 20px;
+}
+
+.light-mode {
+    %skeleton-base {
+        background: linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.05) 25%,
+            rgba(0, 0, 0, 0.10) 50%,
+            rgba(0, 0, 0, 0.05) 75%
+        );
+        background-size: 800px 100%;
+    }
+}
+
 // ── Mobile ─────────────────────────────────────────────────────────────────
 @media screen and (max-width: 700px) {
     .projects-container {

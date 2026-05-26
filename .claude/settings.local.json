@@ -4,7 +4,9 @@
       "Bash(table)",
       "Bash(mzumbe\")",
       "PowerShell(New-Item -ItemType Directory -Force -Path \"e:\\\\Users\\\\kitan\\\\Documents\\\\Personal\\\\portifolio\\\\api\")",
-      "Bash(npm install *)"
+      "Bash(npm install *)",
+      "Bash(Get-ChildItem -Force)",
+      "Bash(vercel env *)"
     ]
   }
 }
