@@ -164,65 +164,74 @@ function buildSvg(data, artBase64) {
   // ── Now playing ────────────────────────────────────────────────────────────
   const pct          = Math.min((data.progress / data.duration) * 100, 100);
   const filled       = Math.max(0, Math.floor((pct / 100) * BAR_TRACK_W));
+  const dashOffset   = BAR_TRACK_W - filled;           // stroke-dashoffset start
   const remainingSec = Math.max(1, (data.duration - data.progress) / 1000).toFixed(2);
-  const dotEndCx     = PAD + BAR_TRACK_W;
   const title        = esc(truncate(data.title,  42));
   const artist       = esc(truncate(data.artist, 42));
-  const elapsed      = fmtMs(data.progress);
-  const remaining    = "-" + fmtMs(data.duration - data.progress);
+  const totalTime    = fmtMs(data.duration);
   const SVG_H        = 108;
   const EQ_BOT       = SVG_H - 8;
+  const LINE_Y       = 63;
 
   return `<svg width="${SVG_W}" height="${SVG_H}" xmlns="http://www.w3.org/2000/svg">
-  ${defs}
+  <defs>
+    <!-- Gradient in userSpaceOnUse so it works on a <line> stroke -->
+    <linearGradient id="progG" x1="${PAD}" y1="0" x2="${PAD + BAR_TRACK_W}" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%"   stop-color="#5000ca"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+    <linearGradient id="eqG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="rgba(167,139,250,0.85)"/>
+      <stop offset="100%" stop-color="rgba(80,0,202,0.85)"/>
+    </linearGradient>
+    ${artBase64 ? `<clipPath id="artClip"><rect x="${PAD}" y="${ART_Y}" width="${ART_W}" height="${ART_W}" rx="5"/></clipPath>` : ""}
+  </defs>
   <style>
-    @keyframes eq  { 0%,100% { transform: scaleY(0.15); } 50% { transform: scaleY(1); } }
-    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+    @keyframes eq    { 0%,100% { transform: scaleY(0.15); } 50% { transform: scaleY(1); } }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
     .eq-bar   { transform-box: fill-box; transform-origin: 50% 100%; animation: eq .95s ease-in-out infinite; }
     .live-dot { animation: pulse 1.8s ease-in-out infinite; }
   </style>
   ${cardBase(SVG_H, artBase64, ART_Y, ART_W, TEXT_X, "NOW PLAYING", "#1db954", title, artist)}
 
-  <!-- Live dot (replaces the label dot for now playing) -->
+  <!-- Live dot -->
   <circle class="live-dot" cx="${TEXT_X + 5}" cy="${ART_Y + 6}" r="4" fill="#1db954"/>
 
   <!-- Progress track -->
-  <rect x="${PAD}" y="62" width="${BAR_TRACK_W}" height="3" rx="2" fill="#21262d"/>
+  <line x1="${PAD}" y1="${LINE_Y}" x2="${PAD + BAR_TRACK_W}" y2="${LINE_Y}"
+    stroke="#21262d" stroke-width="3" stroke-linecap="round"/>
 
-  <!-- Progress fill — SMIL animation for real-time movement -->
-  <rect x="${PAD}" y="62" width="${filled}" height="3" rx="2" fill="url(#progG)">
-    <animate attributeName="width"
-      from="${filled}" to="${BAR_TRACK_W}"
+  <!-- Progress fill — stroke-dashoffset animates reliably in all SVG img contexts -->
+  <line x1="${PAD}" y1="${LINE_Y}" x2="${PAD + BAR_TRACK_W}" y2="${LINE_Y}"
+    stroke="url(#progG)" stroke-width="3" stroke-linecap="round"
+    stroke-dasharray="${BAR_TRACK_W}" stroke-dashoffset="${dashOffset}">
+    <animate attributeName="stroke-dashoffset"
+      from="${dashOffset}" to="0"
       dur="${remainingSec}s" calcMode="linear"
       fill="freeze" begin="0s"/>
-  </rect>
+  </line>
 
-  <!-- Glow dot — follows fill head via SMIL -->
-  <circle cx="${PAD + filled}" cy="63" r="4.5" fill="#a78bfa">
+  <!-- Glow dot — follows the fill head -->
+  <circle cx="${PAD + filled}" cy="${LINE_Y}" r="4.5" fill="#a78bfa">
     <animate attributeName="cx"
-      from="${PAD + filled}" to="${dotEndCx}"
+      from="${PAD + filled}" to="${PAD + BAR_TRACK_W}"
       dur="${remainingSec}s" calcMode="linear"
       fill="freeze" begin="0s"/>
   </circle>
 
-  <!-- Elapsed time -->
-  <text x="${PAD}" y="76" dominant-baseline="middle"
-    font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
-    font-size="10" fill="#484f58">${elapsed}</text>
-
   <!-- EQ bars -->
   ${eqBarsMarkup(EQ_BOT, true)}
 
-  <!-- Remaining time -->
+  <!-- Total duration (right side — always accurate, no ticking needed) -->
   <text x="${PAD + BAR_TRACK_W}" y="76" dominant-baseline="middle" text-anchor="end"
     font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
-    font-size="10" fill="#484f58">${remaining}</text>
+    font-size="10" fill="#484f58">${totalTime}</text>
 </svg>`;
 }
 
 module.exports = async function handler(req, res) {
   res.setHeader("Content-Type", "image/svg+xml");
-  res.setHeader("Cache-Control", "s-maxage=30, stale-while-revalidate=60");
+  res.setHeader("Cache-Control", "s-maxage=10, stale-while-revalidate=20");
   res.setHeader("Access-Control-Allow-Origin", "*");
 
   try {
