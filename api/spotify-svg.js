@@ -1,5 +1,6 @@
-const TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
+const TOKEN_ENDPOINT       = "https://accounts.spotify.com/api/token";
 const NOW_PLAYING_ENDPOINT = "https://api.spotify.com/v1/me/player/currently-playing";
+const RECENTLY_PLAYED_URL  = "https://api.spotify.com/v1/me/player/recently-played?limit=1";
 
 async function getAccessToken() {
   const basic = Buffer.from(
@@ -17,6 +18,26 @@ async function getAccessToken() {
     }).toString(),
   });
   return res.json();
+}
+
+async function getLastPlayed(access_token) {
+  try {
+    const res = await fetch(RECENTLY_PLAYED_URL, {
+      headers: { Authorization: `Bearer ${access_token}` },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const track = data?.items?.[0]?.track;
+    if (!track) return null;
+    return {
+      title:    track.name,
+      artist:   track.artists.map((a) => a.name).join(", "),
+      albumArt: track.album.images[0]?.url,
+      songUrl:  track.external_urls.spotify,
+    };
+  } catch {
+    return null;
+  }
 }
 
 async function toBase64(url) {
@@ -46,61 +67,56 @@ function fmtMs(ms) {
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 }
 
-// 12 bars with varying max heights
-const BAR_HEIGHTS = [0.45, 0.70, 0.90, 0.60, 1.00, 0.75, 0.55, 0.85, 0.65, 0.80, 0.50, 0.40];
-const BAR_W = 3;
-const BAR_GAP = 3;
-const EQ_BARS = BAR_HEIGHTS.length;
-const EQ_TOTAL_W = EQ_BARS * BAR_W + (EQ_BARS - 1) * BAR_GAP; // 69px
-const EQ_MAX_H = 18;
-const SVG_W = 480;
-const PAD = 18;
-const BAR_TRACK_W = SVG_W - PAD * 2; // 444px
-const EQ_X_START = (SVG_W - EQ_TOTAL_W) / 2; // centered
+const BAR_HEIGHTS  = [0.45, 0.70, 0.90, 0.60, 1.00, 0.75, 0.55, 0.85, 0.65, 0.80, 0.50, 0.40];
+const BAR_W        = 3;
+const BAR_GAP      = 3;
+const EQ_BARS      = BAR_HEIGHTS.length;
+const EQ_TOTAL_W   = EQ_BARS * BAR_W + (EQ_BARS - 1) * BAR_GAP;
+const EQ_MAX_H     = 18;
+const SVG_W        = 480;
+const PAD          = 18;
+const BAR_TRACK_W  = SVG_W - PAD * 2;
+const EQ_X_START   = (SVG_W - EQ_TOTAL_W) / 2;
+
+function eqBarsMarkup(bottomY, playing) {
+  return BAR_HEIGHTS.map((h, i) => {
+    const x     = EQ_X_START + i * (BAR_W + BAR_GAP);
+    const bh    = Math.max(2, Math.floor(EQ_MAX_H * h));
+    const y     = bottomY - bh;
+    const delay = (i * 0.065).toFixed(3);
+    const cls   = playing ? "eq-bar" : "eq-bar-off";
+    return `<rect class="${cls}" x="${x}" y="${y}" width="${BAR_W}" height="${bh}" rx="1"
+      fill="${playing ? "url(#eqG)" : "#21262d"}" style="animation-delay:${delay}s"/>`;
+  }).join("\n  ");
+}
+
+function cardBase(height, artBase64, artY, ART_W, textX, label, labelColor, title, artist) {
+  return `
+  <!-- Card -->
+  <rect width="${SVG_W}" height="${height}" rx="10" fill="#161b22"/>
+  <rect width="${SVG_W}" height="${height}" rx="10" fill="none" stroke="rgba(167,139,250,0.15)" stroke-width="1"/>
+  ${artBase64 ? `<image href="${artBase64}" x="${PAD}" y="${artY}" width="${ART_W}" height="${ART_W}" clip-path="url(#artClip)"/>` : ""}
+  <!-- Label -->
+  <text x="${textX + 14}" y="${artY + 6}" dominant-baseline="middle"
+    font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+    font-size="9" fill="${labelColor}" font-weight="700" letter-spacing="0.1em">${label}</text>
+  <!-- Title -->
+  <text x="${textX}" y="${artY + 22}" dominant-baseline="middle"
+    font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+    font-size="14" fill="#e6edf3" font-weight="700">${title}</text>
+  <!-- Artist -->
+  <text x="${textX}" y="${artY + 38}" dominant-baseline="middle"
+    font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+    font-size="12" fill="#8b949e">${artist}</text>`;
+}
 
 function buildSvg(data, artBase64) {
-  if (!data.isPlaying) {
-    // Not playing — static dimmed EQ bars
-    const eqY = 34;
-    const eqBars = BAR_HEIGHTS.map((h, i) => {
-      const x = EQ_X_START + i * (BAR_W + BAR_GAP);
-      const bh = Math.max(2, Math.floor(EQ_MAX_H * h));
-      return `<rect x="${x}" y="${eqY - bh}" width="${BAR_W}" height="${bh}" rx="1" fill="#30363d"/>`;
-    }).join("");
-
-    return `<svg width="${SVG_W}" height="56" xmlns="http://www.w3.org/2000/svg">
-  <rect width="${SVG_W}" height="56" rx="10" fill="#161b22"/>
-  <circle cx="${PAD + 6}" cy="28" r="5" fill="#1db954" opacity="0.35"/>
-  <text x="${PAD + 18}" y="28" dominant-baseline="middle"
-    font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
-    font-size="12" fill="#484f58">Not listening to anything right now</text>
-  ${eqBars}
-</svg>`;
-  }
-
-  const pct = Math.min((data.progress / data.duration) * 100, 100);
-  const filled = Math.max(0, Math.floor((pct / 100) * BAR_TRACK_W));
-  const title  = esc(truncate(data.title, 42));
-  const artist = esc(truncate(data.artist, 42));
-  const elapsed   = fmtMs(data.progress);
-  const remaining = "-" + fmtMs(data.duration - data.progress);
-
-  // EQ bars centered, bottom anchored at y=92
-  const EQ_BOTTOM = 92;
-  const eqBars = BAR_HEIGHTS.map((h, i) => {
-    const x  = EQ_X_START + i * (BAR_W + BAR_GAP);
-    const bh = Math.max(2, Math.floor(EQ_MAX_H * h));
-    const y  = EQ_BOTTOM - bh;
-    const delay = (i * 0.065).toFixed(3);
-    return `<rect class="eq-bar" x="${x}" y="${y}" width="${BAR_W}" height="${bh}" rx="1" fill="url(#eqG)" style="animation-delay:${delay}s"/>`;
-  }).join("\n  ");
-
-  // Album art offset — if no art, shift text to the left edge
-  const ART_W = 38;
+  const ART_W   = 38;
+  const ART_Y   = 12;
   const ART_PAD = artBase64 ? ART_W + 10 : 0;
-  const TEXT_X = PAD + ART_PAD;
+  const TEXT_X  = PAD + ART_PAD;
 
-  return `<svg width="${SVG_W}" height="108" xmlns="http://www.w3.org/2000/svg">
+  const defs = `
   <defs>
     <linearGradient id="progG" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%"   stop-color="#5000ca"/>
@@ -110,58 +126,84 @@ function buildSvg(data, artBase64) {
       <stop offset="0%"   stop-color="rgba(167,139,250,0.85)"/>
       <stop offset="100%" stop-color="rgba(80,0,202,0.85)"/>
     </linearGradient>
-    ${artBase64 ? `<clipPath id="artClip"><rect x="${PAD}" y="12" width="${ART_W}" height="${ART_W}" rx="5"/></clipPath>` : ""}
-  </defs>
+    ${artBase64 ? `<clipPath id="artClip"><rect x="${PAD}" y="${ART_Y}" width="${ART_W}" height="${ART_W}" rx="5"/></clipPath>` : ""}
+  </defs>`;
+
+  // ── Not playing ────────────────────────────────────────────────────────────
+  if (!data.isPlaying) {
+    const lp = data.lastPlayed;
+
+    if (!lp) {
+      // No last played data at all
+      return `<svg width="${SVG_W}" height="56" xmlns="http://www.w3.org/2000/svg">
+  <rect width="${SVG_W}" height="56" rx="10" fill="#161b22"/>
+  <rect width="${SVG_W}" height="56" rx="10" fill="none" stroke="rgba(167,139,250,0.15)" stroke-width="1"/>
+  <circle cx="${PAD + 6}" cy="28" r="5" fill="#1db954" opacity="0.3"/>
+  <text x="${PAD + 18}" y="28" dominant-baseline="middle"
+    font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+    font-size="13" fill="#484f58">Not listening to anything right now</text>
+</svg>`;
+    }
+
+    const title  = esc(truncate(lp.title,  42));
+    const artist = esc(truncate(lp.artist, 42));
+    const SVG_H  = 80;
+    const EQ_BOT = SVG_H - 8;
+
+    return `<svg width="${SVG_W}" height="${SVG_H}" xmlns="http://www.w3.org/2000/svg">
+  ${defs}
   <style>
-    .eq-bar {
-      transform-box: fill-box;
-      transform-origin: 50% 100%;
-      animation: eq .95s ease-in-out infinite;
-    }
-    .live-dot {
-      animation: pulse 1.8s ease-in-out infinite;
-    }
-    @keyframes eq {
-      0%,100% { transform: scaleY(0.15); }
-      50%      { transform: scaleY(1); }
-    }
-    @keyframes pulse {
-      0%,100% { opacity: 1;   r: 4; }
-      50%      { opacity: 0.3; r: 2.5; }
-    }
+    @keyframes eq { 0%,100% { transform: scaleY(0.15); } 50% { transform: scaleY(1); } }
+    .eq-bar { transform-box: fill-box; transform-origin: 50% 100%; animation: eq .95s ease-in-out infinite; }
   </style>
+  ${cardBase(SVG_H, artBase64, ART_Y, ART_W, TEXT_X, "LAST PLAYED", "rgba(167,139,250,0.7)", title, artist)}
+  ${eqBarsMarkup(EQ_BOT, false)}
+</svg>`;
+  }
 
-  <!-- Card background -->
-  <rect width="${SVG_W}" height="108" rx="10" fill="#161b22"/>
-  <rect width="${SVG_W}" height="108" rx="10" fill="none" stroke="rgba(167,139,250,0.15)" stroke-width="1"/>
+  // ── Now playing ────────────────────────────────────────────────────────────
+  const pct          = Math.min((data.progress / data.duration) * 100, 100);
+  const filled       = Math.max(0, Math.floor((pct / 100) * BAR_TRACK_W));
+  const remainingSec = Math.max(1, (data.duration - data.progress) / 1000).toFixed(2);
+  const dotEndCx     = PAD + BAR_TRACK_W;
+  const title        = esc(truncate(data.title,  42));
+  const artist       = esc(truncate(data.artist, 42));
+  const elapsed      = fmtMs(data.progress);
+  const remaining    = "-" + fmtMs(data.duration - data.progress);
+  const SVG_H        = 108;
+  const EQ_BOT       = SVG_H - 8;
 
-  <!-- Album art -->
-  ${artBase64 ? `<image href="${artBase64}" x="${PAD}" y="12" width="${ART_W}" height="${ART_W}" clip-path="url(#artClip)"/>` : ""}
+  return `<svg width="${SVG_W}" height="${SVG_H}" xmlns="http://www.w3.org/2000/svg">
+  ${defs}
+  <style>
+    @keyframes eq  { 0%,100% { transform: scaleY(0.15); } 50% { transform: scaleY(1); } }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+    .eq-bar   { transform-box: fill-box; transform-origin: 50% 100%; animation: eq .95s ease-in-out infinite; }
+    .live-dot { animation: pulse 1.8s ease-in-out infinite; }
+  </style>
+  ${cardBase(SVG_H, artBase64, ART_Y, ART_W, TEXT_X, "NOW PLAYING", "#1db954", title, artist)}
 
-  <!-- Live pulsing dot -->
-  <circle class="live-dot" cx="${TEXT_X + 5}" cy="18" r="4" fill="#1db954"/>
-
-  <!-- NOW PLAYING label -->
-  <text x="${TEXT_X + 14}" y="18" dominant-baseline="middle"
-    font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
-    font-size="9" fill="#1db954" font-weight="700" letter-spacing="0.1em">NOW PLAYING</text>
-
-  <!-- Track title -->
-  <text x="${TEXT_X}" y="34" dominant-baseline="middle"
-    font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
-    font-size="14" fill="#e6edf3" font-weight="700">${title}</text>
-
-  <!-- Artist -->
-  <text x="${TEXT_X}" y="50" dominant-baseline="middle"
-    font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
-    font-size="12" fill="#8b949e">${artist}</text>
+  <!-- Live dot (replaces the label dot for now playing) -->
+  <circle class="live-dot" cx="${TEXT_X + 5}" cy="${ART_Y + 6}" r="4" fill="#1db954"/>
 
   <!-- Progress track -->
   <rect x="${PAD}" y="62" width="${BAR_TRACK_W}" height="3" rx="2" fill="#21262d"/>
-  <!-- Progress fill -->
-  <rect x="${PAD}" y="62" width="${filled}" height="3" rx="2" fill="url(#progG)"/>
-  <!-- Glow dot at leading edge -->
-  ${filled > 4 ? `<circle cx="${PAD + filled}" cy="63" r="4.5" fill="#a78bfa" filter="url(#glow)"/>` : ""}
+
+  <!-- Progress fill — SMIL animation for real-time movement -->
+  <rect x="${PAD}" y="62" width="${filled}" height="3" rx="2" fill="url(#progG)">
+    <animate attributeName="width"
+      from="${filled}" to="${BAR_TRACK_W}"
+      dur="${remainingSec}s" calcMode="linear"
+      fill="freeze" begin="0s"/>
+  </rect>
+
+  <!-- Glow dot — follows fill head via SMIL -->
+  <circle cx="${PAD + filled}" cy="63" r="4.5" fill="#a78bfa">
+    <animate attributeName="cx"
+      from="${PAD + filled}" to="${dotEndCx}"
+      dur="${remainingSec}s" calcMode="linear"
+      fill="freeze" begin="0s"/>
+  </circle>
 
   <!-- Elapsed time -->
   <text x="${PAD}" y="76" dominant-baseline="middle"
@@ -169,7 +211,7 @@ function buildSvg(data, artBase64) {
     font-size="10" fill="#484f58">${elapsed}</text>
 
   <!-- EQ bars -->
-  ${eqBars}
+  ${eqBarsMarkup(EQ_BOT, true)}
 
   <!-- Remaining time -->
   <text x="${PAD + BAR_TRACK_W}" y="76" dominant-baseline="middle" text-anchor="end"
@@ -185,30 +227,38 @@ module.exports = async function handler(req, res) {
 
   try {
     const { access_token } = await getAccessToken();
-    if (!access_token) return res.end(buildSvg({ isPlaying: false }, null));
+    if (!access_token) return res.end(buildSvg({ isPlaying: false, lastPlayed: null }, null));
 
     const trackRes = await fetch(NOW_PLAYING_ENDPOINT, {
       headers: { Authorization: `Bearer ${access_token}` },
     });
 
     if (trackRes.status === 204 || trackRes.status >= 400) {
-      return res.end(buildSvg({ isPlaying: false }, null));
+      const lastPlayed = await getLastPlayed(access_token);
+      const artBase64  = lastPlayed?.albumArt ? await toBase64(lastPlayed.albumArt) : null;
+      return res.end(buildSvg({ isPlaying: false, lastPlayed }, artBase64));
     }
 
     const song = await trackRes.json();
-    if (!song?.item) return res.end(buildSvg({ isPlaying: false }, null));
 
-    const artUrl = song.item.album.images[0]?.url;
-    const artBase64 = artUrl ? await toBase64(artUrl) : null;
+    if (!song?.item || !song.is_playing) {
+      const lastPlayed = await getLastPlayed(access_token);
+      const artBase64  = lastPlayed?.albumArt ? await toBase64(lastPlayed.albumArt) : null;
+      return res.end(buildSvg({ isPlaying: false, lastPlayed }, artBase64));
+    }
+
+    const artBase64 = song.item.album.images[0]?.url
+      ? await toBase64(song.item.album.images[0].url)
+      : null;
 
     return res.end(buildSvg({
-      isPlaying: song.is_playing,
-      title:    song.item.name,
-      artist:   song.item.artists.map((a) => a.name).join(", "),
-      progress: song.progress_ms,
-      duration: song.item.duration_ms,
+      isPlaying: true,
+      title:     song.item.name,
+      artist:    song.item.artists.map((a) => a.name).join(", "),
+      progress:  song.progress_ms,
+      duration:  song.item.duration_ms,
     }, artBase64));
   } catch {
-    return res.end(buildSvg({ isPlaying: false }, null));
+    return res.end(buildSvg({ isPlaying: false, lastPlayed: null }, null));
   }
 };

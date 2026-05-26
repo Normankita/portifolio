@@ -3,6 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 import "../assets/styles/SpotifyWidget.scss";
 
+interface LastPlayed {
+  title: string;
+  artist: string;
+  albumArt?: string;
+  songUrl?: string;
+}
+
 interface NowPlaying {
   isPlaying: boolean;
   title?: string;
@@ -12,6 +19,7 @@ interface NowPlaying {
   songUrl?: string;
   progress?: number;
   duration?: number;
+  lastPlayed?: LastPlayed | null;
 }
 
 function formatMs(ms: number): string {
@@ -74,18 +82,35 @@ function SpotifyWidget() {
   }
 
   if (!data.isPlaying) {
+    const lp = data.lastPlayed;
     return (
       <div className="spotify-strip offline">
-        <div className="spotify-strip-header">
-          <FontAwesomeIcon icon={faSpotify} className="sp-icon" />
-          <span className="sp-label">Not playing right now</span>
-        </div>
-        <div className="spotify-eq-row">
-          <div className={`sp-eq paused`}>
-            {Array.from({ length: EQ_BARS }).map((_, i) => (
-              <span key={i} className="sp-bar" />
-            ))}
+        {lp ? (
+          <a
+            href={lp.songUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="spotify-strip-track"
+          >
+            <FontAwesomeIcon icon={faSpotify} className="sp-icon" />
+            <span className="sp-last-label">Last played</span>
+            {lp.albumArt && (
+              <img src={lp.albumArt} alt={lp.title} className="sp-art" />
+            )}
+            <span className="sp-title">{lp.title}</span>
+            <span className="sp-sep">·</span>
+            <span className="sp-artist">{lp.artist}</span>
+          </a>
+        ) : (
+          <div className="spotify-strip-header">
+            <FontAwesomeIcon icon={faSpotify} className="sp-icon" />
+            <span className="sp-label">Not playing right now</span>
           </div>
+        )}
+        <div className="sp-eq paused">
+          {Array.from({ length: EQ_BARS }).map((_, i) => (
+            <span key={i} className="sp-bar" />
+          ))}
         </div>
       </div>
     );
@@ -93,7 +118,6 @@ function SpotifyWidget() {
 
   return (
     <div className="spotify-strip">
-      {/* Track info row — entire row is a link to open in Spotify */}
       <a
         href={data.songUrl}
         target="_blank"
@@ -108,7 +132,6 @@ function SpotifyWidget() {
         <span className="sp-artist">{data.artist}</span>
       </a>
 
-      {/* Progress bar — full width with glow head */}
       <div className="sp-progress-track">
         <div
           className="sp-progress-fill"
@@ -116,7 +139,6 @@ function SpotifyWidget() {
         />
       </div>
 
-      {/* Times + equalizer */}
       <div className="sp-bottom-row">
         <span className="sp-time">{formatMs(localProgress)}</span>
         <div className="sp-eq playing">

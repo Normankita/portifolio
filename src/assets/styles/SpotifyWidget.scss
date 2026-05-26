@@ -161,6 +161,18 @@
     font-style: italic;
 }
 
+.sp-last-label {
+    color: rgba(255, 255, 255, 0.35);
+    font-family: "Lato", sans-serif;
+    font-size: 0.75rem;
+    font-style: italic;
+    flex-shrink: 0;
+}
+
+.light-mode .sp-last-label {
+    color: rgba(13, 17, 22, 0.35);
+}
+
 // ── Progress bar ───────────────────────────────────────────────────────────
 .sp-progress-track {
     width: 100%;
