@@ -18,7 +18,11 @@ async function getAccessToken() {
     }).toString(),
   });
 
-  return res.json();
+  const data = await res.json();
+  if (!data.access_token) {
+    console.error("Token refresh failed:", JSON.stringify(data));
+  }
+  return data;
 }
 
 module.exports = async function handler(req, res) {
@@ -28,18 +32,28 @@ module.exports = async function handler(req, res) {
   try {
     const { access_token } = await getAccessToken();
 
+    if (!access_token) {
+      return res.status(200).json({ isPlaying: false, _debug: "token_refresh_failed" });
+    }
+
     const trackRes = await fetch(NOW_PLAYING_ENDPOINT, {
       headers: { Authorization: `Bearer ${access_token}` },
     });
 
-    if (trackRes.status === 204 || trackRes.status > 400) {
-      return res.status(200).json({ isPlaying: false });
+    if (trackRes.status === 204) {
+      return res.status(200).json({ isPlaying: false, _debug: "not_playing_204" });
+    }
+
+    if (trackRes.status >= 400) {
+      const err = await trackRes.text();
+      console.error("Now-playing error:", trackRes.status, err);
+      return res.status(200).json({ isPlaying: false, _debug: `api_error_${trackRes.status}` });
     }
 
     const song = await trackRes.json();
 
     if (!song?.item) {
-      return res.status(200).json({ isPlaying: false });
+      return res.status(200).json({ isPlaying: false, _debug: "no_item" });
     }
 
     return res.status(200).json({
@@ -52,7 +66,8 @@ module.exports = async function handler(req, res) {
       progress: song.progress_ms,
       duration: song.item.duration_ms,
     });
-  } catch {
-    return res.status(200).json({ isPlaying: false });
+  } catch (e) {
+    console.error("Spotify handler error:", e);
+    return res.status(200).json({ isPlaying: false, _debug: "exception" });
   }
 };
