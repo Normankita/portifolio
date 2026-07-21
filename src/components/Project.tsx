@@ -60,7 +60,7 @@ const vercelEnrichment: Record<string, VercelEnrichment> = {
 const manualProjects: ProjectData[] = [
   {
     title: "NorZah Cinema",
-    url: "https://norzahcinema.netlify.app/",
+    url: "https://norzah-cinema.vercel.app/",
     description:
       "Movie and TV discovery app powered by the TMDB API. Features real-time search, trending content, and a fully responsive UI — built with React for fast, reload-free navigation.",
     tags: ["React", "TMDB API", "CSS3"],
