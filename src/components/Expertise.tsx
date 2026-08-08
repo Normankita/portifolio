@@ -1,8 +1,8 @@
 import React from "react";
 import '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faReact, faPython } from '@fortawesome/free-brands-svg-icons';
-import { faNetworkWired } from '@fortawesome/free-solid-svg-icons';
+import { faReact, faPython, faFlutter, faGitAlt } from '@fortawesome/free-brands-svg-icons';
+import { faNetworkWired, faServer, faShieldHalved } from '@fortawesome/free-solid-svg-icons';
 
 import Chip from '@mui/material/Chip';
 import '../assets/styles/Expertise.scss';
@@ -45,6 +45,40 @@ const labelsThird = [
     "Python Libraries"
 ];
 
+const labelsFourth = [
+    "Flutter",
+    "Dart",
+    "Android",
+    "iOS",
+    "Desktop",
+    "Web"
+];
+
+const labelsFifth = [
+    "Git",
+    "GitHub",
+    "GitLab"
+];
+
+const labelsSixth = [
+    "Firebase",
+    "Supabase",
+    "Node.js",
+    "Express.js",
+    "Django"
+];
+
+const labelsSeventh = [
+    "Linux Server Administration",
+    "Network Security",
+    "Cisco CLI",
+    "IEEE 802.1x"
+];
+
+const labelsEighth = [
+    "Email Forensics & Header Analysis"
+];
+
 function Expertise() {
     return (
         <div className="container" id="expertise">
@@ -82,6 +116,66 @@ function Expertise() {
                         <div className="flex-chips">
                             <span className="chip-title">Tech stack:</span>
                             {labelsThird.map((label, index) => (
+                                <Chip key={index} className='chip' label={label} />
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="skill">
+                        <FontAwesomeIcon icon={faFlutter} size="3x"/>
+                        <h3>Mobile & Cross-Platform Development</h3>
+                        <p>Building Flutter applications that ship to Android, iOS, desktop, and web from a single Dart codebase, with a focus on consistent UI and native performance across targets.</p>
+                        <div className="flex-chips">
+                            <span className="chip-title">Tech stack:</span>
+                            {labelsFourth.map((label, index) => (
+                                <Chip key={index} className='chip' label={label} />
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="skill">
+                        <FontAwesomeIcon icon={faGitAlt} size="3x"/>
+                        <h3>Version Control & Collaboration</h3>
+                        <p>Managing source control and collaborative workflows across teams, using branching strategies, code review, and CI-friendly practices to keep projects shippable.</p>
+                        <div className="flex-chips">
+                            <span className="chip-title">Tech stack:</span>
+                            {labelsFifth.map((label, index) => (
+                                <Chip key={index} className='chip' label={label} />
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="skill">
+                        <FontAwesomeIcon icon={faServer} size="3x"/>
+                        <h3>Backend & Backend-as-a-Service (BaaS)</h3>
+                        <p>Designing APIs and server-side logic with Node.js, Express.js, and Django, and leaning on managed backends like Firebase and Supabase to move faster without sacrificing control.</p>
+                        <div className="flex-chips">
+                            <span className="chip-title">Tech stack:</span>
+                            {labelsSixth.map((label, index) => (
+                                <Chip key={index} className='chip' label={label} />
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="skill">
+                        <FontAwesomeIcon icon={faNetworkWired} size="3x"/>
+                        <h3>Infrastructure & Systems Administration</h3>
+                        <p>Administering Linux servers and enterprise network infrastructure, including secure network design, Cisco CLI configuration, and 802.1x-based access control.</p>
+                        <div className="flex-chips">
+                            <span className="chip-title">Tech stack:</span>
+                            {labelsSeventh.map((label, index) => (
+                                <Chip key={index} className='chip' label={label} />
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="skill">
+                        <FontAwesomeIcon icon={faShieldHalved} size="3x"/>
+                        <h3>Specialized / Cybersecurity Tools</h3>
+                        <p>Applying investigative techniques to trace email origin and authenticity, including header analysis and forensic review of message metadata.</p>
+                        <div className="flex-chips">
+                            <span className="chip-title">Tech stack:</span>
+                            {labelsEighth.map((label, index) => (
                                 <Chip key={index} className='chip' label={label} />
                             ))}
                         </div>
