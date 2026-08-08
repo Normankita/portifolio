@@ -77,8 +77,8 @@ const manualProjects: ProjectData[] = [
     preview: "iframe",
   },
   {
-    title: "Kilimo AI",
-    url: "https://kilimo-ai.vercel.app/",
+    title: "NorZah Kilimo Smart assist",
+    url: "https://kilimo-ai.norzah.dev/",
     description:
       "AI-driven agricultural assistant built to provide localized crop advice, disease diagnosis, and smart farming insights for regional farmers.",
     tags: ["React", "TypeScript", "AI / LLM API", "Tailwind CSS"],
