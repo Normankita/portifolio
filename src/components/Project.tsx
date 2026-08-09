@@ -86,7 +86,7 @@ const manualProjects: ProjectData[] = [
   },
   {
     title: "NorZah CPRTask",
-    url: "https://norzah-todo.netlify.app/",
+    url: "https://todo.norzah.dev/",
     description:
       "Lightweight, zero-backend task management system utilizing persistent browser LocalStorage for offline state synchronization.",
     tags: ["React", "Local Storage"],
@@ -94,7 +94,7 @@ const manualProjects: ProjectData[] = [
   },
   {
     title: "WordWave",
-    url: "https://wordcount-norzah.netlify.app/",
+    url: "https://wordwave.norzah.dev/",
     description:
       "Real-time string parsing utility calculating live word, character, and reading-time metrics with zero external dependencies.",
     tags: ["JavaScript", "HTML5", "CSS3"],
