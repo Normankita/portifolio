@@ -93,7 +93,7 @@ const manualProjects: ProjectData[] = [
     preview: "iframe",
   },
   {
-    title: "Word Counter",
+    title: "WordWave",
     url: "https://wordcount-norzah.netlify.app/",
     description:
       "Real-time string parsing utility calculating live word, character, and reading-time metrics with zero external dependencies.",
