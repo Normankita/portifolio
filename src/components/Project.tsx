@@ -70,7 +70,7 @@ const manualProjects: ProjectData[] = [
   },
   {
     title: "Harusi Kadi",
-    url: "https://harusi-kadi.vercel.app/",
+    url: "https://harusi.norzah.dev/",
     description:
       "Interactive wedding card generator and preview platform. Features real-time template customization, dynamic contribution tracking, and custom print/export-ready layouts.",
     tags: ["Next.js", "Tailwind CSS", "TypeScript", "React"],
