@@ -1,7 +1,7 @@
 import React from "react";
 import '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faReact, faPython, faFlutter, faGitAlt } from '@fortawesome/free-brands-svg-icons';
+import { faReact, faPython, faFlutter, faGitAlt, faDocker } from '@fortawesome/free-brands-svg-icons';
 import { faNetworkWired, faServer, faShieldHalved } from '@fortawesome/free-solid-svg-icons';
 
 import Chip from '@mui/material/Chip';
@@ -9,15 +9,20 @@ import '../assets/styles/Expertise.scss';
 
 const labelsFirst = [
   "JavaScript",
+  "TypeScript",
   "Python",
   "PHP",
   "React",
+  "Next.js",
   "Django",
   "PostgreSQL",
   "MySQL",
   "HTML5",
   "CSS3",
   "Tailwind CSS",
+  "Bootstrap",
+  "MUI",
+  "Vite",
   "Redux",
   "Laravel",
   "Yii2",
@@ -77,6 +82,11 @@ const labelsSeventh = [
 
 const labelsEighth = [
     "Email Forensics & Header Analysis"
+];
+
+const labelsNinth = [
+    "Docker",
+    "Vercel"
 ];
 
 function Expertise() {
@@ -176,6 +186,18 @@ function Expertise() {
                         <div className="flex-chips">
                             <span className="chip-title">Tech stack:</span>
                             {labelsEighth.map((label, index) => (
+                                <Chip key={index} className='chip' label={label} />
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="skill">
+                        <FontAwesomeIcon icon={faDocker} size="3x"/>
+                        <h3>DevOps & Deployment</h3>
+                        <p>Containerizing services for consistent, portable deployments and shipping frontend/backend projects to production on Vercel.</p>
+                        <div className="flex-chips">
+                            <span className="chip-title">Tech stack:</span>
+                            {labelsNinth.map((label, index) => (
                                 <Chip key={index} className='chip' label={label} />
                             ))}
                         </div>
