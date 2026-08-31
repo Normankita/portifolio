@@ -34,20 +34,20 @@ interface VercelEnrichment {
 // Metadata for each Vercel project — keyed by the Vercel project name.
 // Add an entry here whenever you deploy something new to Vercel.
 const vercelEnrichment: Record<string, VercelEnrichment> = {
-  "norzah-ecommerce": {
+  "norzah-e-commerce": {
     title: "NorZah E-Commerce",
     description:
       "Full-stack e-commerce engine with real-time cart state management, RESTful API endpoints built on Express.js, and structured product data pipelines.",
     tags: ["React", "Express.js", "Node.js"],
     preview: "iframe",
   },
-  "components-demo-hazel": {
+  "components-demo": {
     title: "Awesome Table Component",
     description:
       "High-performance, accessible React table component with dynamic pagination, column sorting, client-side filtering, skeleton loaders, and custom row actions.",
     tags: ["React", "Tailwind CSS", "TypeScript"],
     preview: "iframe",
-    urlOverride: "https://components-demo-hazel.vercel.app/table",
+    urlOverride: "https://components-demo.norzah.dev/table",
   },
   "fyp-mzumbe": {
     title: "Mzumbe FYP Management Portal",
@@ -62,7 +62,7 @@ const vercelEnrichment: Record<string, VercelEnrichment> = {
 const manualProjects: ProjectData[] = [
   {
     title: "NorZah Cinema",
-    url: "https://norzah-cinema.vercel.app/",
+    url: "https://cinema.norzah.dev/",
     description:
       "Responsive media discovery app powered by TMDB API. Implements client-side search caching, dynamic routing, and lazy-loaded image grids.",
     tags: ["React", "TMDB API", "CSS3"],
