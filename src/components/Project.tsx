@@ -40,6 +40,7 @@ const vercelEnrichment: Record<string, VercelEnrichment> = {
       "Full-stack e-commerce engine with real-time cart state management, RESTful API endpoints built on Express.js, and structured product data pipelines.",
     tags: ["React", "Express.js", "Node.js"],
     preview: "iframe",
+    urlOverride: "https://norzah-e-commerce.norzah.dev",
   },
   "components-demo": {
     title: "Awesome Table Component",
