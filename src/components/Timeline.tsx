@@ -75,7 +75,7 @@ function Timeline() {
             <h3 className="vertical-timeline-element-title">ICT Developer (Trainee)</h3>
             <h4 className="vertical-timeline-element-subtitle">PSSSF HQ, Dodoma</h4>
             <p>
-              Developed internal tools using PHP, Yii Framework, and Laravel — gaining hands-on experience in MVC architecture, ORM, and enterprise application patterns.
+              Developed internal tools using PHP, Yii Framework, and Laravel... gaining hands-on experience in MVC architecture, ORM, and enterprise application patterns.
             </p>
           </VerticalTimelineElement>
 

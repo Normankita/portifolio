@@ -98,7 +98,7 @@ function Expertise() {
                     <div className="skill">
                         <FontAwesomeIcon icon={faReact} size="3x"/>
                         <h3>Programming & Web Development</h3>
-                        <p>Full-stack developer focused on backend-heavy systems — database design, business logic, and integrations — while building clean, maintainable frontends. Comfortable across the stack from REST APIs to reactive UIs.</p>
+                        <p>Full-stack developer focused on backend-heavy systems, database design, business logic, and integrations, while building clean, maintainable frontends. Comfortable across the stack from REST APIs to reactive UIs.</p>
                         <div className="flex-chips">
                             <span className="chip-title">Tech stack:</span>
                             {labelsFirst.map((label, index) => (
