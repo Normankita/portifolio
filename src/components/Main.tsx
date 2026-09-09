@@ -43,10 +43,7 @@ function Main({ mode }: Props) {
     <div className="container">
       <div className="about-section">
         <div className="hero-inner">
-          <div className="profile-container">
-            <div className="image-wrapper">
-              <img src={dp} alt="Norman Kita" />
-            </div>
+          <div className="hero-grid">
             <div className="content">
               {socialLinks('social_icons')}
               <h1>Norman Kita</h1>
@@ -75,7 +72,49 @@ function Main({ mode }: Props) {
               </div>
               {socialLinks('mobile_social_icons')}
             </div>
+
+            <div className="hero-right">
+              <div className="image-wrapper">
+                <img src={dp} alt="Norman Kita" />
+              </div>
+
+              <div className="term-card" aria-hidden="true">
+                <div className="term-bar">
+                  <span className="term-dot" />
+                  <span className="term-dot" />
+                  <span className="term-dot" />
+                  <span className="term-title">developer.ts</span>
+                </div>
+                <div className="term-body">
+                  <div className="term-line">
+                    <span className="tk-kw">const</span>{' '}
+                    <span className="tk-var">norman</span>{' '}
+                    <span className="tk-op">=</span> {'{'}
+                  </div>
+                  <div className="term-line term-indent">
+                    <span className="tk-key">role</span>:{' '}
+                    <span className="tk-str">'Full-Stack Dev'</span>,
+                  </div>
+                  <div className="term-line term-indent">
+                    <span className="tk-key">focus</span>:{' '}
+                    <span className="tk-str">'backend · data · systems'</span>,
+                  </div>
+                  <div className="term-line term-indent">
+                    <span className="tk-key">stack</span>:{' '}
+                    <span className="tk-str">'Python · Django · React'</span>,
+                  </div>
+                  <div className="term-line term-indent">
+                    <span className="tk-key">openToWork</span>:{' '}
+                    <span className="tk-bool">true</span>,
+                  </div>
+                  <div className="term-line">
+                    {'}'};<span className="term-cursor" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+
           <div className="spotify-float-section">
             <SpotifyWidget />
           </div>

@@ -26,14 +26,15 @@
 }
 
 .about-section {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 40px;
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 100px 6% 50px;
-    min-height: 700px;
+    padding: 88px 6% 56px;
+    min-height: 620px;
     background-image: url("../images/bg-dark.png");
     background-repeat: no-repeat;
     background-size: cover;
@@ -41,21 +42,157 @@
     background-position: center;
 }
 
+// Diagonal scrim so the hero copy sits on calmer ground than the wave art
+.about-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(
+        105deg,
+        rgba(13, 17, 22, 0.74) 0%,
+        rgba(13, 17, 22, 0.42) 38%,
+        rgba(13, 17, 22, 0) 66%
+    );
+}
+
+.light-mode .about-section::before {
+    background: linear-gradient(
+        105deg,
+        rgba(248, 249, 250, 0.85) 0%,
+        rgba(248, 249, 250, 0.5) 38%,
+        rgba(248, 249, 250, 0) 66%
+    );
+}
+
 .hero-inner {
+    position: relative;
+    z-index: 1;
     width: 100%;
-    max-width: 1100px;
+    max-width: 1240px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 40px;
 }
 
-.profile-container {
+.hero-grid {
     display: flex;
-    gap: 30px;
-    justify-content: flex-start;
+    gap: 56px;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
+}
+
+.hero-right {
+    flex-shrink: 0;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+}
+
+// ── Faux "developer.ts" code card ────────────────────────────────────────
+.term-card {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(17, 20, 28, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.42), 0 6px 18px rgba(80, 0, 202, 0.18);
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.light-mode .term-card {
+    background: rgba(255, 255, 255, 0.72);
+    border-color: rgba(13, 17, 22, 0.12);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.14), 0 6px 18px rgba(80, 0, 202, 0.12);
+}
+
+.term-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.light-mode .term-bar {
+    background: rgba(13, 17, 22, 0.04);
+    border-bottom-color: rgba(13, 17, 22, 0.08);
+}
+
+.term-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ff5f56;
+
+    &:nth-child(2) { background: #ffbd2e; }
+    &:nth-child(3) { background: #27c93f; }
+}
+
+.term-title {
+    margin-left: 8px;
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.light-mode .term-title {
+    color: rgba(13, 17, 22, 0.5);
+}
+
+.term-body {
+    padding: 14px 16px 16px;
+    font-size: 0.7rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.9);
+    white-space: nowrap;
+    overflow-x: auto;
+}
+
+.light-mode .term-body {
+    color: rgba(13, 17, 22, 0.88);
+}
+
+.term-indent {
+    padding-left: 1.5em;
+}
+
+.tk-kw   { color: #c084fc; }
+.tk-var  { color: #7dd3fc; }
+.tk-op   { color: rgba(255, 255, 255, 0.55); }
+.tk-key  { color: #a78bfa; }
+.tk-str  { color: #6ee7a8; }
+.tk-bool { color: #fbbf24; }
+
+.light-mode {
+    .tk-kw   { color: #7c3aed; }
+    .tk-var  { color: #0369a1; }
+    .tk-op   { color: rgba(13, 17, 22, 0.55); }
+    .tk-key  { color: #5000ca; }
+    .tk-str  { color: #047857; }
+    .tk-bool { color: #b45309; }
+}
+
+.term-cursor {
+    display: inline-block;
+    width: 7px;
+    height: 1em;
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    background: #a78bfa;
+    animation: term-blink 1.1s step-end infinite;
+}
+
+@keyframes term-blink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0; }
 }
 
 .spotify-float-section {
@@ -68,7 +205,9 @@
 
 .about-section .content {
     text-align: left;
-    z-index: 2;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 560px;
 
     .social_icons {
         display: flex;
@@ -196,9 +335,14 @@
 
 
 .about-section .image-wrapper {
-    z-index: 2;
+    width: 100%;
+    display: flex;
+    justify-content: center;
     img {
-        width: 200px;
+        width: 280px;
+        max-width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
         border-radius: 50%;
         box-shadow:
             0 0 0 3px rgba(80, 0, 202, 0.35),
@@ -298,8 +442,22 @@
             padding-right: 0px;
         }
 
-        .profile-container {
-            display: block;
+        .hero-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .hero-right {
+            order: -1;
+            width: 100%;
+            align-items: flex-start;
+            gap: 0;
+            margin-bottom: 8px;
+        }
+
+        .term-card {
+            display: none;
         }
 
         .spotify-float-section {
@@ -321,12 +479,13 @@
         }
 
         .about-section .image-wrapper {
+            justify-content: flex-start;
             padding-left: 5%;
             width: 100%;
         }
 
         .about-section .image-wrapper img {
-            width: 160px;
+            width: 190px;
         }
     }
 }
