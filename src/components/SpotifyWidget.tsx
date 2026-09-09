@@ -55,6 +55,7 @@ function SpotifyWidget() {
   useEffect(() => {
     if (!data.isPlaying) return;
     const id = setInterval(() => {
+      if (document.hidden) return; // don't tick while the tab is backgrounded
       setLocalProgress((p) => {
         const next = p + 1000;
         return data.duration && next >= data.duration ? data.duration : next;
@@ -126,6 +127,7 @@ function SpotifyWidget() {
       >
         <FontAwesomeIcon icon={faSpotify} className="sp-icon playing" />
         <span className="sp-live-dot" />
+        <span className="sp-live-label">Now playing</span>
         <img src={data.albumArt} alt={data.album} className="sp-art" />
         <span className="sp-title">{data.title}</span>
         <span className="sp-sep">·</span>

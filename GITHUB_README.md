@@ -16,14 +16,14 @@
 </p>
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=18&pause=1000&color=A78BFA&center=true&vCenter=true&width=500&lines=Full-Stack+Developer;Backend+%26+Database+Architecture;Building+at+PSSSF+HQ+%F0%9F%87%B9%F0%9F%87%BF" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=18&pause=1000&color=A78BFA&center=true&vCenter=true&width=500&lines=Full-Stack+Developer;Backend+%26+Database+Architecture;Large-Scale+Financial+Platforms+%F0%9F%87%B9%F0%9F%87%BF" alt="Typing SVG" />
 </p>
 
 ---
 
 ### About Me
 
-I'm a full-stack developer based in Tanzania, building reliable, data-intensive systems at **PSSSF HQ**.
+I'm a full-stack developer based in Tanzania, building reliable, data-intensive systems for large-scale financial platforms.
 My focus is on backend architecture, database design, and bridging complexity with clean interfaces.
 Currently sharpening skills in system design, performance optimization, and algorithms.
 

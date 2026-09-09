@@ -27,6 +27,48 @@ a {
   text-decoration: none;
 }
 
+// ── Skip link (keyboard / screen-reader users) ─────────────────────────────
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  z-index: 2000;
+  padding: 10px 16px;
+  background: #5000ca;
+  color: #fff;
+  border-radius: 0 0 8px 0;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+// ── Visible focus for keyboard navigation ─────────────────────────────────
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible,
+[role="button"]:focus-visible,
+.MuiButtonBase-root:focus-visible {
+  outline: 2px solid #a78bfa;
+  outline-offset: 2px;
+}
+
+// ── Respect reduced-motion preferences ───────────────────────────────────
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .about-section {
+    background-attachment: scroll !important;
+  }
+}
+
 a:hover {
   color: #5000ca;
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
@@ -51,6 +93,29 @@ p, a, h1, h2, h3, h4, h5, label, button {
 
   svg {
     cursor: pointer;
+  }
+}
+
+.nav-monogram {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  padding: 2px 10px !important;
+  line-height: 1.4;
+
+  &:hover {
+    color: #a78bfa !important;
+    border-color: #a78bfa;
+    background: rgba(167, 139, 250, 0.12);
+  }
+}
+
+.light-mode .nav-monogram {
+  border-color: rgba(13, 17, 22, 0.18);
+
+  &:hover {
+    color: #5000ca !important;
+    border-color: #5000ca;
+    background: rgba(80, 0, 202, 0.08);
   }
 }
 

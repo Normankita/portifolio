@@ -11,36 +11,74 @@ interface Props {
   mode: string;
 }
 
+const socials = [
+  { href: 'https://github.com/Normankita', label: 'GitHub', Icon: GitHubIcon },
+  { href: 'https://www.linkedin.com/in/norman-kita-aa6499207/', label: 'LinkedIn', Icon: LinkedInIcon },
+  { href: 'https://wa.me/+255621381584', label: 'WhatsApp', Icon: WhatsAppIcon },
+];
+
 function Main({ mode }: Props) {
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const socialLinks = (className: string) => (
+    <div className={className}>
+      {socials.map(({ href, label, Icon }) => (
+        <a
+          key={label}
+          href={href}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={label}
+          title={label}
+        >
+          <Icon />
+        </a>
+      ))}
+    </div>
+  );
+
   return (
     <div className="container">
       <div className="about-section">
-        <div className="profile-container">
-          <div className="image-wrapper">
-            <img src={dp} alt="Avatar" />
-          </div>
-          <div className="content">
-            <div className="social_icons">
-              <a href="https://github.com/Normankita" target="_blank" rel="noreferrer"><GitHubIcon/></a>
-              <a href="https://www.linkedin.com/in/norman-kita-aa6499207/" target="_blank" rel="noreferrer"><LinkedInIcon/></a>
-              <a href="https://wa.me/+255621381584" target="_blank" rel="noreferrer"><WhatsAppIcon/></a>
+        <div className="hero-inner">
+          <div className="profile-container">
+            <div className="image-wrapper">
+              <img src={dp} alt="Norman Kita" />
             </div>
-            <h1>Norman Kita</h1>
-            <p className="tagline">Full-Stack Developer</p>
-            <p className="bio">
-              Building reliable, data-intensive systems at <strong>PSSSF HQ</strong>.
-              Focused on backend architecture, database design, and bridging complexity with clean interfaces.
-              Currently sharpening skills in system design, performance optimization, and algorithms.
-            </p>
-            <div className="mobile_social_icons">
-              <a href="https://github.com/Normankita" target="_blank" rel="noreferrer"><GitHubIcon/></a>
-              <a href="https://www.linkedin.com/in/norman-kita-aa6499207/" target="_blank" rel="noreferrer"><LinkedInIcon/></a>
-              <a href="https://wa.me/+255621381584" target="_blank" rel="noreferrer"><WhatsAppIcon/></a>
+            <div className="content">
+              {socialLinks('social_icons')}
+              <h1>Norman Kita</h1>
+              <p className="tagline">Full-Stack Developer</p>
+              <p className="bio">
+                Building reliable, data-intensive systems for large-scale financial
+                platforms. Focused on backend architecture, database design, and
+                bridging complexity with clean interfaces &mdash; with growing depth
+                in system design, performance, and algorithms.
+              </p>
+              <div className="hero-cta">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => scrollToSection('projects')}
+                >
+                  View Projects
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-ghost"
+                  onClick={() => scrollToSection('contact')}
+                >
+                  Get in touch
+                </button>
+              </div>
+              {socialLinks('mobile_social_icons')}
             </div>
           </div>
-        </div>
-        <div className="spotify-float-section">
-          <SpotifyWidget />
+          <div className="spotify-float-section">
+            <SpotifyWidget />
+          </div>
         </div>
       </div>
     </div>

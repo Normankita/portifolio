@@ -32,13 +32,22 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 100px 15% 50px;
+    padding: 100px 6% 50px;
     min-height: 700px;
     background-image: url("../images/bg-dark.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
+}
+
+.hero-inner {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
 }
 
 .profile-container {
@@ -50,9 +59,9 @@
 }
 
 .spotify-float-section {
-    width: 75%;
-    max-width: 900px;
-    margin: 10px auto 0;
+    width: 100%;
+    max-width: 640px;
+    margin: 0;
     position: relative;
     z-index: 10;
 }
@@ -89,13 +98,98 @@
         margin-block-end: 0px;
         max-width: 480px;
         line-height: 1.7;
-        opacity: 0.85;
+        opacity: 0.92;
     }
 
     h1 {
-        font-size: 5em;
+        font-size: 4em;
         margin-block-start: 0px;
         margin-block-end: 0px;
+    }
+}
+
+// ── Hero call-to-action buttons ───────────────────────────────────────────
+.hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 24px;
+}
+
+.btn {
+    font-family: "Lato", sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 11px 24px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease,
+        border-color 0.2s ease, color 0.2s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+.btn-primary {
+    color: #fff;
+    background: linear-gradient(135deg, #5000ca, #7c3aed);
+    box-shadow: 0 8px 24px rgba(80, 0, 202, 0.35);
+
+    &:hover {
+        color: #fff;
+        box-shadow: 0 12px 32px rgba(80, 0, 202, 0.5);
+    }
+}
+
+.btn-ghost {
+    color: #fff;
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.25);
+
+    &:hover {
+        color: #a78bfa;
+        border-color: #a78bfa;
+        background: rgba(167, 139, 250, 0.12);
+    }
+}
+
+.light-mode .btn-ghost {
+    color: #0d1116;
+    border-color: rgba(13, 17, 22, 0.25);
+
+    &:hover {
+        color: #5000ca;
+        border-color: #5000ca;
+        background: rgba(80, 0, 202, 0.08);
+    }
+}
+
+// Keep hero copy readable where it overlaps the background artwork
+.dark-mode .about-section .content {
+    h1,
+    .bio {
+        text-shadow: 0 0 26px rgba(13, 17, 22, 0.92), 0 2px 10px rgba(13, 17, 22, 0.85);
+    }
+
+    .tagline {
+        filter: drop-shadow(0 1px 10px rgba(13, 17, 22, 0.9));
+    }
+}
+
+.light-mode .about-section .content {
+    h1,
+    .bio {
+        text-shadow: 0 0 20px rgba(248, 249, 250, 0.95), 0 1px 8px rgba(248, 249, 250, 0.9);
+    }
+
+    .tagline {
+        filter: drop-shadow(0 1px 8px rgba(248, 249, 250, 0.95));
     }
 }
 
@@ -211,7 +305,12 @@
         .spotify-float-section {
             width: 90%;
             padding: 0 0 40px;
-            margin-top: 10px;
+            margin: 10px auto 0;
+        }
+
+        .hero-cta .btn {
+            flex: 1 1 auto;
+            text-align: center;
         }
 
         .about-section .content {
