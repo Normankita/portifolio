@@ -51,7 +51,7 @@ function Main({ mode }: Props) {
               <p className="bio">
                 Building reliable, data-intensive systems for large-scale financial
                 platforms. Focused on backend architecture, database design, and
-                bridging complexity with clean interfaces &mdash; with growing depth
+                bridging complexity with clean interfaces with growing depth
                 in system design, performance, and algorithms.
               </p>
               <div className="hero-cta">
