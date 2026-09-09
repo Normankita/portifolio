@@ -57,20 +57,36 @@
     );
 }
 
+// Light mode: the wave art is already faint, so skip the darkening scrim
 .light-mode .about-section::before {
-    background: linear-gradient(
-        105deg,
-        rgba(248, 249, 250, 0.85) 0%,
-        rgba(248, 249, 250, 0.5) 38%,
-        rgba(248, 249, 250, 0) 66%
+    display: none;
+}
+
+// Ambient purple glow so the hero has depth / brand colour in both themes
+.about-section::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(
+        38% 48% at 84% 38%,
+        rgba(124, 58, 237, 0.13),
+        transparent 72%
     );
+}
+
+.light-mode .about-section::after {
+    background:
+        radial-gradient(42% 52% at 84% 36%, rgba(124, 58, 237, 0.15), transparent 72%),
+        radial-gradient(44% 50% at 4% 92%, rgba(150, 100, 240, 0.1), transparent 70%);
 }
 
 .hero-inner {
     position: relative;
     z-index: 1;
     width: 100%;
-    max-width: 1240px;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -79,7 +95,7 @@
 
 .hero-grid {
     display: flex;
-    gap: 56px;
+    gap: 48px;
     justify-content: space-between;
     align-items: center;
     width: 100%;
@@ -87,11 +103,11 @@
 
 .hero-right {
     flex-shrink: 0;
-    width: 300px;
+    width: 360px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 22px;
+    gap: 24px;
 }
 
 // ── Faux "developer.ts" code card ────────────────────────────────────────
@@ -148,9 +164,9 @@
 }
 
 .term-body {
-    padding: 14px 16px 16px;
-    font-size: 0.7rem;
-    line-height: 1.8;
+    padding: 14px 18px 16px;
+    font-size: 0.74rem;
+    line-height: 1.85;
     color: rgba(255, 255, 255, 0.9);
     white-space: nowrap;
     overflow-x: auto;
@@ -207,7 +223,7 @@
     text-align: left;
     flex: 1 1 auto;
     min-width: 0;
-    max-width: 560px;
+    max-width: 620px;
 
     .social_icons {
         display: flex;
@@ -339,7 +355,7 @@
     display: flex;
     justify-content: center;
     img {
-        width: 280px;
+        width: 320px;
         max-width: 100%;
         aspect-ratio: 1 / 1;
         object-fit: cover;
@@ -405,6 +421,28 @@
         }
     }
 
+    @media (min-width: 769px) and (max-width: 1040px) {
+        .hero-inner {
+            max-width: 900px;
+        }
+
+        .hero-grid {
+            gap: 32px;
+        }
+
+        .hero-right {
+            width: 300px;
+        }
+
+        .about-section .content h1 {
+            font-size: 3.2em;
+        }
+
+        .about-section .image-wrapper img {
+            width: 264px;
+        }
+    }
+
     @media (max-width:768px) {
         .about-section h1 {
             font-size: 4em !important;
@@ -436,7 +474,7 @@
         }
 
         .about-section {
-            padding-top: 150px;
+            padding-top: 96px;
             display: block;
             padding-left: 0px;
             padding-right: 0px;

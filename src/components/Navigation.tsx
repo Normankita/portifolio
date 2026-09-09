@@ -92,7 +92,23 @@ function Navigation({parentToChild, modeChange}: any) {
               className="nav-monogram"
               aria-label="Back to top"
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              sx={{ color: '#fff', minWidth: 'auto', fontWeight: 800, fontSize: '1.15rem', letterSpacing: '1px' }}
+              sx={{
+                minWidth: 'auto',
+                px: 1.25,
+                py: 0.5,
+                lineHeight: 1,
+                fontWeight: 800,
+                fontSize: '1rem',
+                letterSpacing: '1.5px',
+                color: '#fff',
+                borderRadius: '9px',
+                background: 'linear-gradient(135deg, #5000ca, #7c3aed)',
+                boxShadow: '0 4px 14px rgba(80, 0, 202, 0.35)',
+                '&:hover': {
+                  background: 'linear-gradient(135deg, #7c3aed, #a78bfa)',
+                  boxShadow: '0 6px 18px rgba(80, 0, 202, 0.45)',
+                },
+              }}
             >
               NK
             </Button>
