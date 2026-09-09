@@ -21,9 +21,9 @@ function Timeline() {
             icon={<FontAwesomeIcon icon={faBriefcase} />}
           >
             <h3 className="vertical-timeline-element-title">ICT Officer</h3>
-            <h4 className="vertical-timeline-element-subtitle">PSSSF HQ</h4>
+            <h4 className="vertical-timeline-element-subtitle">Financial services organization</h4>
             <p>
-              Delivering IT solutions and maintaining critical systems supporting the organization's daily operations. Focused on system integration, reliability, and process automation.
+              Delivering IT solutions and maintaining critical systems that support day-to-day operations. Focused on system integration, reliability, and process automation.
             </p>
           </VerticalTimelineElement>
 
@@ -60,9 +60,9 @@ function Timeline() {
             icon={<FontAwesomeIcon icon={faBriefcase} />}
           >
             <h3 className="vertical-timeline-element-title">ICT Network Admin (Trainee)</h3>
-            <h4 className="vertical-timeline-element-subtitle">PSSSF HQ, Dodoma</h4>
+            <h4 className="vertical-timeline-element-subtitle">Financial services organization</h4>
             <p>
-              Configured and maintained VLAN segmentation and IEEE 802.1x port-based authentication across Cisco infrastructure, strengthening network security and access control.
+              Worked on network segmentation and port-based (802.1X) access control across enterprise switching infrastructure, strengthening network security and access control.
             </p>
           </VerticalTimelineElement>
 
@@ -73,7 +73,7 @@ function Timeline() {
             icon={<FontAwesomeIcon icon={faBriefcase} />}
           >
             <h3 className="vertical-timeline-element-title">ICT Developer (Trainee)</h3>
-            <h4 className="vertical-timeline-element-subtitle">PSSSF HQ, Dodoma</h4>
+            <h4 className="vertical-timeline-element-subtitle">Financial services organization</h4>
             <p>
               Developed internal tools using PHP, Yii Framework, and Laravel... gaining hands-on experience in MVC architecture, ORM, and enterprise application patterns.
             </p>
