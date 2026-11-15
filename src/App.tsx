@@ -4,6 +4,7 @@ import {
   Services,
   Timeline,
   Expertise,
+  HowItWorks,
   Project,
   Contact,
   Navigation,
@@ -37,6 +38,7 @@ function App() {
                 <Services/>
                 <Project/>
                 <Expertise/>
+                <HowItWorks/>
                 <Timeline/>
                 <Contact/>
             </FadeIn>
