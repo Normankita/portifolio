@@ -141,10 +141,13 @@
     }
 }
 
-.project-result-todo {
-    color: #fbbf24;
+.project-status {
+    color: #6ee7a8;
     opacity: 1;
-    font-style: italic;
+}
+
+.light-mode .project-status {
+    color: #047857;
 }
 
 .project-link {

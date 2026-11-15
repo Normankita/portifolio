@@ -11,7 +11,7 @@ interface FeaturedProject {
   headline: string;
   problem: string;
   builtIt: string;
-  result: string;
+  status: string;
   tags: string[];
   preview: "iframe" | "image";
   image?: string;
@@ -31,7 +31,7 @@ const featuredProjects: FeaturedProject[] = [
       "Couples and event planners needed a fast way to design, preview and share wedding invitations without hiring a designer or waiting on a print shop.",
     builtIt:
       "An interactive wedding card generator and preview platform with real-time template customization, dynamic contribution tracking, and custom print/export-ready layouts.",
-    result: "TODO: add real result",
+    status: "Live at harusi.norzah.dev and open for anyone to create a card.",
     tags: ["Next.js", "Tailwind CSS", "TypeScript", "React"],
     preview: "iframe",
   },
@@ -45,7 +45,7 @@ const featuredProjects: FeaturedProject[] = [
       "Smallholder farmers often lack quick access to localized agronomic expertise for crop issues and day-to-day farming decisions.",
     builtIt:
       "An AI-driven agricultural assistant that gives localized crop advice, disease diagnosis, and smart farming insights for regional farmers.",
-    result: "TODO: add real result",
+    status: "Live at kilimo-ai.norzah.dev as a working product.",
     tags: ["React", "TypeScript", "AI / LLM API", "Tailwind CSS"],
     preview: "iframe",
   },
@@ -56,10 +56,11 @@ const featuredProjects: FeaturedProject[] = [
     linkLabel: "View live project",
     headline: "Final-year project supervision in one portal",
     problem:
-      "Mzumbe University needed a structured way to track final-year student projects and supervisor sign-off, instead of relying on manual, ad-hoc processes.",
+      "Final-year projects at universities are often tracked through manual, ad-hoc processes, which makes supervision and sign-off hard to follow.",
     builtIt:
-      "A project tracking and supervision portal with role-based access control and automated progress tracking, built with Django and PostgreSQL.",
-    result: "TODO: add real result",
+      "A proposed project tracking and supervision portal, designed around Mzumbe University's final-year process, with role-based access control and automated progress tracking. Built with Django and PostgreSQL.",
+    status:
+      "Working prototype with a live demo. Built as a proposed solution, not commissioned by the university.",
     tags: ["React", "Django", "PostgreSQL"],
     preview: "iframe",
   },
@@ -73,7 +74,7 @@ const featuredProjects: FeaturedProject[] = [
       "Property managers handling multiple units needed one system to manage bookings and avoid double-booking across properties.",
     builtIt:
       "A multi-tenant booking and property management system with real-time availability calendars and tenant scheduling, built with Yii2 MVC and MySQL.",
-    result: "TODO: add real result",
+    status: "Complete codebase available on GitHub.",
     tags: ["PHP", "Yii2", "MySQL"],
     preview: "image",
     image: mock09,
@@ -206,8 +207,8 @@ function Project() {
                   <dd>{project.builtIt}</dd>
                 </div>
                 <div>
-                  <dt>Result</dt>
-                  <dd className="project-result-todo">{project.result}</dd>
+                  <dt>Status</dt>
+                  <dd className="project-status">{project.status}</dd>
                 </div>
               </dl>
               <div className="project-tags">
