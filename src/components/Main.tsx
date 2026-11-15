@@ -5,7 +5,6 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
 import '../assets/styles/Main.scss';
 import dp from '../assets/images/dp.jpg';
-import SpotifyWidget from './SpotifyWidget';
 
 interface Props {
   mode: string;
@@ -46,13 +45,11 @@ function Main({ mode }: Props) {
           <div className="hero-grid">
             <div className="content">
               {socialLinks('social_icons')}
-              <h1>Norman Kita</h1>
-              <p className="tagline">Full-Stack Developer</p>
+              <p className="tagline">Norman Kita &middot; Full-Stack Developer</p>
+              <h1>I build web apps and AI assistants for businesses, in English and Swahili.</h1>
               <p className="bio">
-                Building reliable, data-intensive systems for large-scale financial
-                platforms. Focused on backend architecture, database design, and
-                bridging complexity with clean interfaces with growing depth
-                in system design, performance, and algorithms.
+                Full-stack developer based in Tanzania. From idea to a live
+                product in weeks, at a fixed price.
               </p>
               <div className="hero-cta">
                 <button
@@ -60,14 +57,14 @@ function Main({ mode }: Props) {
                   className="btn btn-primary"
                   onClick={() => scrollToSection('projects')}
                 >
-                  View Projects
+                  See my work
                 </button>
                 <button
                   type="button"
                   className="btn btn-ghost"
                   onClick={() => scrollToSection('contact')}
                 >
-                  Get in touch
+                  Start a project
                 </button>
               </div>
               {socialLinks('mobile_social_icons')}
@@ -97,14 +94,14 @@ function Main({ mode }: Props) {
                   </div>
                   <div className="term-line term-indent">
                     <span className="tk-key">focus</span>:{' '}
-                    <span className="tk-str">'backend · data · systems'</span>,
+                    <span className="tk-str">'web apps · AI assistants · mobile'</span>,
                   </div>
                   <div className="term-line term-indent">
                     <span className="tk-key">stack</span>:{' '}
-                    <span className="tk-str">'Python · Django · React'</span>,
+                    <span className="tk-str">'Laravel · Django · React · Next.js'</span>,
                   </div>
                   <div className="term-line term-indent">
-                    <span className="tk-key">openToWork</span>:{' '}
+                    <span className="tk-key">availableForProjects</span>:{' '}
                     <span className="tk-bool">true</span>,
                   </div>
                   <div className="term-line">
@@ -113,10 +110,6 @@ function Main({ mode }: Props) {
                 </div>
               </div>
             </div>
-          </div>
-
-          <div className="spotify-float-section">
-            <SpotifyWidget />
           </div>
         </div>
       </div>
