@@ -1,3 +1,23 @@
+// ── Background collapse toggle ─────────────────────────────────────────────
+.background-toggle {
+    display: inline-flex;
+    align-items: center;
+    align-self: center;
+    gap: 10px;
+}
+
+.toggle-chevron {
+    transition: transform 0.25s ease;
+
+    &.open {
+        transform: rotate(180deg);
+    }
+}
+
+#background-timeline {
+    margin-top: 32px;
+}
+
 // ── Timeline connector line ────────────────────────────────────────────────
 .vertical-timeline::before {
     width: 2px !important;
