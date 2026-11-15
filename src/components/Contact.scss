@@ -98,6 +98,14 @@
     &:focus {
         border-bottom-color: rgba(255, 255, 255, 0.6);
     }
+
+    // color-scheme alone isn't reliably honored for the popup background in
+    // every browser -- force readable colors directly on the options too,
+    // so the list can't render as (near-)invisible white-on-white text.
+    option {
+        background-color: #14161d;
+        color: #fff;
+    }
 }
 
 .user-box input {
@@ -269,6 +277,11 @@
 
         &:focus {
             border-bottom-color: rgba(0, 0, 0, 0.5);
+        }
+
+        option {
+            background-color: #fff;
+            color: #0d1116;
         }
     }
 
