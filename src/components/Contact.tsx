@@ -14,6 +14,9 @@ function Contact() {
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [message, setMessage] = useState<string>('');
+  const [projectType, setProjectType] = useState<string>('');
+  const [timeline, setTimeline] = useState<string>('');
+  const [budget, setBudget] = useState<string>('');
   const [status, setStatus] = useState<Status>('idle');
 
   const sendEmail = async (e: FormEvent<HTMLFormElement>) => {
@@ -36,11 +39,21 @@ function Contact() {
     setStatus('sending');
 
     try {
-      await emailjs.send(serviceId, templateId, { name, email, message }, publicKey);
+      await emailjs.send(serviceId, templateId, {
+        name,
+        email,
+        message,
+        project_type: projectType || 'Not specified',
+        timeline: timeline || 'Not specified',
+        budget: budget || 'Not specified',
+      }, publicKey);
       setStatus('success');
       setName('');
       setEmail('');
       setMessage('');
+      setProjectType('');
+      setTimeline('');
+      setBudget('');
     } catch (err) {
       console.error('EmailJS send failed', err);
       setStatus('error');
@@ -62,6 +75,40 @@ function Contact() {
               <div className='input-field'>
                 <input type="email" required placeholder='Your email' value={email}
                   onChange={(e) => setEmail(e.target.value)} />
+              </div>
+            </div>
+            <div className='select-row'>
+              <div className='input-field select-field'>
+                <label htmlFor="project_type">What do you need?</label>
+                <select id="project_type" value={projectType}
+                  onChange={(e) => setProjectType(e.target.value)}>
+                  <option value="">Select...</option>
+                  <option value="AI assistant">AI assistant</option>
+                  <option value="Web app or dashboard">Web app or dashboard</option>
+                  <option value="Maintenance">Maintenance</option>
+                  <option value="Something else">Something else</option>
+                </select>
+              </div>
+              <div className='input-field select-field'>
+                <label htmlFor="timeline">Timeline</label>
+                <select id="timeline" value={timeline}
+                  onChange={(e) => setTimeline(e.target.value)}>
+                  <option value="">Select...</option>
+                  <option value="As soon as possible">As soon as possible</option>
+                  <option value="Within 1 to 3 months">Within 1 to 3 months</option>
+                  <option value="Flexible">Flexible</option>
+                </select>
+              </div>
+              <div className='input-field select-field'>
+                <label htmlFor="budget">Budget (optional)</label>
+                <select id="budget" value={budget}
+                  onChange={(e) => setBudget(e.target.value)}>
+                  <option value="">Select...</option>
+                  <option value="Under $500">Under $500</option>
+                  <option value="$500 to $2,000">$500 to $2,000</option>
+                  <option value="Over $2,000">Over $2,000</option>
+                  <option value="Not sure yet">Not sure yet</option>
+                </select>
               </div>
             </div>
             <div className='textarea-field'>

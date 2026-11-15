@@ -45,6 +45,61 @@
     bottom: 30px;
 }
 
+// ── Optional detail dropdowns (project type / timeline / budget) ───────────
+.select-row {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
+.select-field {
+    label {
+        display: block;
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #fff;
+        opacity: 0.5;
+        margin-bottom: 6px;
+    }
+}
+
+.user-box select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 24px 10px 0;
+    font-size: 15px;
+    color: #fff;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    outline: none;
+    background: transparent
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")
+        no-repeat right center / 14px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    transition: border-bottom-color 0.3s ease, color 0.3s ease;
+
+    &:focus {
+        border-bottom-color: rgba(255, 255, 255, 0.6);
+    }
+
+    // The native dropdown list is rendered by the OS/browser, not styled by
+    // this stylesheet -- give its options a readable color regardless.
+    option {
+        color: #0d1116;
+    }
+}
+
 .user-box input {
     width: 100%;
     box-sizing: border-box;
@@ -199,6 +254,20 @@
 
         &::placeholder {
             color: #0d1116;
+        }
+    }
+
+    .select-field label {
+        color: #0d1116;
+    }
+
+    .user-box select {
+        color: #0d1116;
+        border-bottom-color: rgba(0, 0, 0, 0.2);
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230d1116' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+
+        &:focus {
+            border-bottom-color: rgba(0, 0, 0, 0.5);
         }
     }
 
