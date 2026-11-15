@@ -129,6 +129,7 @@
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.06em;
+        color: #fff;
         opacity: 0.5;
         margin: 0;
     }
@@ -136,6 +137,7 @@
     dd {
         font-size: 0.875rem;
         line-height: 1.6;
+        color: #fff;
         opacity: 0.8;
         margin: 2px 0 0;
     }
@@ -251,6 +253,18 @@
     .project-info p {
         opacity: 0.65;
         color: #0d1116;
+    }
+
+    .project-breakdown {
+        dt {
+            color: #0d1116;
+            opacity: 0.55;
+        }
+
+        dd {
+            color: #0d1116;
+            opacity: 0.75;
+        }
     }
 
     .project-info a:hover h2 {
