@@ -1,0 +1,7 @@
+// Services reuses the .skills-container / .skills-grid / .skill card
+// classes defined in Expertise.scss, so the visual style stays identical.
+// This file only holds the small difference specific to this section.
+
+.services-container {
+    padding-top: 4%;
+}

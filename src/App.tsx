@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {
   Main,
+  Services,
   Timeline,
   Expertise,
   Project,
@@ -33,6 +34,7 @@ function App() {
         <main id="main">
             <FadeIn transitionDuration={700}>
                 <Main mode={mode}/>
+                <Services/>
                 <Expertise/>
                 <Timeline/>
                 <Project/>
