@@ -29,7 +29,11 @@ function formatMs(ms: number): string {
 
 const EQ_BARS = 20;
 
-function SpotifyWidget() {
+interface Props {
+  compact?: boolean;
+}
+
+function SpotifyWidget({ compact = false }: Props) {
   const [data, setData] = useState<NowPlaying>({ isPlaying: false });
   const [loading, setLoading] = useState(true);
   const [localProgress, setLocalProgress] = useState(0);
@@ -70,10 +74,11 @@ function SpotifyWidget() {
       : 0;
 
   const remaining = (data.duration ?? 0) - localProgress;
+  const stripClass = `spotify-strip${compact ? ' compact' : ''}`;
 
   if (loading) {
     return (
-      <div className="spotify-strip">
+      <div className={stripClass}>
         <div className="spotify-strip-skeleton">
           <div className="skel-icon" />
           <div className="skel-text" />
@@ -85,7 +90,7 @@ function SpotifyWidget() {
   if (!data.isPlaying) {
     const lp = data.lastPlayed;
     return (
-      <div className="spotify-strip offline">
+      <div className={`${stripClass} offline`}>
         {lp ? (
           <a
             href={lp.songUrl}
@@ -108,17 +113,19 @@ function SpotifyWidget() {
             <span className="sp-label">Not playing right now</span>
           </div>
         )}
-        <div className="sp-eq paused">
-          {Array.from({ length: EQ_BARS }).map((_, i) => (
-            <span key={i} className="sp-bar" />
-          ))}
-        </div>
+        {!compact && (
+          <div className="sp-eq paused">
+            {Array.from({ length: EQ_BARS }).map((_, i) => (
+              <span key={i} className="sp-bar" />
+            ))}
+          </div>
+        )}
       </div>
     );
   }
 
   return (
-    <div className="spotify-strip">
+    <div className={stripClass}>
       <a
         href={data.songUrl}
         target="_blank"
@@ -134,22 +141,26 @@ function SpotifyWidget() {
         <span className="sp-artist">{data.artist}</span>
       </a>
 
-      <div className="sp-progress-track">
-        <div
-          className="sp-progress-fill"
-          style={{ width: `${progressPct}%` }}
-        />
-      </div>
+      {!compact && (
+        <>
+          <div className="sp-progress-track">
+            <div
+              className="sp-progress-fill"
+              style={{ width: `${progressPct}%` }}
+            />
+          </div>
 
-      <div className="sp-bottom-row">
-        <span className="sp-time">{formatMs(localProgress)}</span>
-        <div className="sp-eq playing">
-          {Array.from({ length: EQ_BARS }).map((_, i) => (
-            <span key={i} className="sp-bar" />
-          ))}
-        </div>
-        <span className="sp-time">-{formatMs(remaining)}</span>
-      </div>
+          <div className="sp-bottom-row">
+            <span className="sp-time">{formatMs(localProgress)}</span>
+            <div className="sp-eq playing">
+              {Array.from({ length: EQ_BARS }).map((_, i) => (
+                <span key={i} className="sp-bar" />
+              ))}
+            </div>
+            <span className="sp-time">-{formatMs(remaining)}</span>
+          </div>
+        </>
+      )}
     </div>
   );
 }

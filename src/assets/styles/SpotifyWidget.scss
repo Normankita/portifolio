@@ -303,6 +303,23 @@ $bar-heights: 20%, 38%, 55%, 72%, 82%, 90%, 78%, 95%, 68%, 58%,
     50%       { opacity: 0.8; }
 }
 
+// ── Compact (footer) variant ────────────────────────────────────────────────
+.spotify-strip.compact {
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 8px 12px;
+    gap: 0;
+    border-radius: 12px;
+
+    .sp-title {
+        max-width: 120px;
+    }
+
+    .sp-artist {
+        max-width: 90px;
+    }
+}
+
 // ── Light mode ─────────────────────────────────────────────────────────────
 .light-mode .spotify-strip {
     background: rgba(255, 255, 255, 0.55);

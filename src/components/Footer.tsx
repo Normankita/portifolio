@@ -3,10 +3,14 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import '../assets/styles/Footer.scss'
+import SpotifyWidget from './SpotifyWidget';
 
 function Footer() {
   return (
     <footer>
+      <div className="footer-spotify">
+        <SpotifyWidget compact />
+      </div>
       <div>
         <a href="https://github.com/Normankita" target="_blank" rel="noreferrer"><GitHubIcon/></a>
         <a href="https://www.linkedin.com/in/norman-kita-aa6499207/" target="_blank" rel="noreferrer"><LinkedInIcon/></a>
