@@ -1,16 +1,90 @@
 import { useEffect, useState } from "react";
 import mock09 from "../assets/images/mock09.png";
-import mock10 from "../assets/images/mock10.png";
 import "../assets/styles/Project.scss";
 import IframePreview from "./IframePreview";
 
-interface ProjectData {
+interface FeaturedProject {
+  id: string;
   title: string;
   url: string;
-  description: string;
+  linkLabel: string;
+  headline: string;
+  problem: string;
+  builtIt: string;
+  result: string;
   tags: string[];
   preview: "iframe" | "image";
   image?: string;
+}
+
+// The four featured projects are hardcoded on purpose: they must render
+// correctly even if the Vercel API call below is slow, rate-limited, or
+// down. Nothing in this list depends on /api/vercel-projects.
+const featuredProjects: FeaturedProject[] = [
+  {
+    id: "harusi-kadi",
+    title: "Harusi Kadi",
+    url: "https://harusi.norzah.dev/",
+    linkLabel: "View live project",
+    headline: "Wedding invitations made in minutes",
+    problem:
+      "Couples and event planners needed a fast way to design, preview and share wedding invitations without hiring a designer or waiting on a print shop.",
+    builtIt:
+      "An interactive wedding card generator and preview platform with real-time template customization, dynamic contribution tracking, and custom print/export-ready layouts.",
+    result: "TODO: add real result",
+    tags: ["Next.js", "Tailwind CSS", "TypeScript", "React"],
+    preview: "iframe",
+  },
+  {
+    id: "kilimo-smart-assist",
+    title: "NorZah Kilimo Smart Assist",
+    url: "https://kilimo-ai.norzah.dev/",
+    linkLabel: "View live project",
+    headline: "Farming advice from an AI assistant",
+    problem:
+      "Smallholder farmers often lack quick access to localized agronomic expertise for crop issues and day-to-day farming decisions.",
+    builtIt:
+      "An AI-driven agricultural assistant that gives localized crop advice, disease diagnosis, and smart farming insights for regional farmers.",
+    result: "TODO: add real result",
+    tags: ["React", "TypeScript", "AI / LLM API", "Tailwind CSS"],
+    preview: "iframe",
+  },
+  {
+    id: "mzumbe-fyp-portal",
+    title: "Mzumbe FYP Management Portal",
+    url: "https://fyp-mzumbe.norzah.dev",
+    linkLabel: "View live project",
+    headline: "Final-year project supervision in one portal",
+    problem:
+      "Mzumbe University needed a structured way to track final-year student projects and supervisor sign-off, instead of relying on manual, ad-hoc processes.",
+    builtIt:
+      "A project tracking and supervision portal with role-based access control and automated progress tracking, built with Django and PostgreSQL.",
+    result: "TODO: add real result",
+    tags: ["React", "Django", "PostgreSQL"],
+    preview: "iframe",
+  },
+  {
+    id: "reservation-system",
+    title: "Reservation System",
+    url: "https://github.com/Normankita/TMH",
+    linkLabel: "View on GitHub",
+    headline: "Bookings and availability for property managers",
+    problem:
+      "Property managers handling multiple units needed one system to manage bookings and avoid double-booking across properties.",
+    builtIt:
+      "A multi-tenant booking and property management system with real-time availability calendars and tenant scheduling, built with Yii2 MVC and MySQL.",
+    result: "TODO: add real result",
+    tags: ["PHP", "Yii2", "MySQL"],
+    preview: "image",
+    image: mock09,
+  },
+];
+
+// ── "More projects" — a compact list below the featured work ────────────────
+interface MoreProject {
+  title: string;
+  url: string;
+  description: string;
 }
 
 interface VercelProject {
@@ -20,201 +94,152 @@ interface VercelProject {
   url: string;
 }
 
-
-
-interface VercelEnrichment {
+interface VercelMoreEnrichment {
   title: string;
   description: string;
-  tags: string[];
-  preview: "iframe" | "image";
   urlOverride?: string;
-  image?: string;
 }
 
-// Metadata for each Vercel project — keyed by the Vercel project name.
-// Add an entry here whenever you deploy something new to Vercel.
-const vercelEnrichment: Record<string, VercelEnrichment> = {
+// Only used to enrich the "More projects" list — never the featured four.
+// Keyed by the Vercel project name, not by title.
+const vercelMoreEnrichment: Record<string, VercelMoreEnrichment> = {
   "norzah-e-commerce": {
     title: "NorZah E-Commerce",
     description:
-      "Full-stack e-commerce engine with real-time cart state management, RESTful API endpoints built on Express.js, and structured product data pipelines.",
-    tags: ["React", "Express.js", "Node.js"],
-    preview: "iframe",
+      "Full-stack e-commerce engine with real-time cart state and a REST API on Express.js.",
     urlOverride: "https://norzah-e-commerce.norzah.dev",
   },
   "components-demo": {
     title: "Awesome Table Component",
     description:
-      "High-performance, accessible React table component with dynamic pagination, column sorting, client-side filtering, skeleton loaders, and custom row actions.",
-    tags: ["React", "Tailwind CSS", "TypeScript"],
-    preview: "iframe",
+      "Accessible React table with pagination, sorting, filtering and skeleton loaders.",
     urlOverride: "https://components-demo.norzah.dev/table",
-  },
-  "fyp-mzumbe": {
-    title: "Mzumbe FYP Management Portal",
-    description:
-      "Enterprise project tracking and supervision portal for Mzumbe University featuring role-based access control and automated progress tracking with Django and PostgreSQL.",
-    tags: ["React", "Django", "PostgreSQL"],
-    preview: "iframe",
   },
 };
 
-// Projects not on Vercel — maintained manually.
-const manualProjects: ProjectData[] = [
+const manualMoreProjects: MoreProject[] = [
   {
     title: "NorZah Cinema",
     url: "https://cinema.norzah.dev/",
-    description:
-      "Responsive media discovery app powered by TMDB API. Implements client-side search caching, dynamic routing, and lazy-loaded image grids.",
-    tags: ["React", "TMDB API", "CSS3"],
-    preview: "iframe",
-  },
-  {
-    title: "Harusi Kadi",
-    url: "https://harusi.norzah.dev/",
-    description:
-      "Interactive wedding card generator and preview platform. Features real-time template customization, dynamic contribution tracking, and custom print/export-ready layouts.",
-    tags: ["Next.js", "Tailwind CSS", "TypeScript", "React"],
-    preview: "iframe",
-  },
-  {
-    title: "NorZah Kilimo Smart assist",
-    url: "https://kilimo-ai.norzah.dev/",
-    description:
-      "AI-driven agricultural assistant built to provide localized crop advice, disease diagnosis, and smart farming insights for regional farmers.",
-    tags: ["React", "TypeScript", "AI / LLM API", "Tailwind CSS"],
-    preview: "iframe",
+    description: "Responsive media discovery app powered by the TMDB API.",
   },
   {
     title: "NorZah CPRTask",
     url: "https://todo.norzah.dev/",
-    description:
-      "Lightweight, zero-backend task management system utilizing persistent browser LocalStorage for offline state synchronization.",
-    tags: ["React", "Local Storage"],
-    preview: "iframe",
+    description: "Zero-backend task manager using persistent browser LocalStorage.",
   },
   {
     title: "WordWave",
     url: "https://wordwave.norzah.dev/",
-    description:
-      "Real-time string parsing utility calculating live word, character, and reading-time metrics with zero external dependencies.",
-    tags: ["JavaScript", "HTML5", "CSS3"],
-    preview: "iframe",
-  },
-  {
-    title: "Reservation System",
-    url: "https://github.com/Normankita/TMH",
-    description:
-      "Multi-tenant booking and property management system handling real-time availability calendars and tenant scheduling using Yii2 MVC and MySQL.",
-    tags: ["PHP", "Yii2", "MySQL"],
-    preview: "image",
-    image: mock09,
-  },
-  {
-    title: "IEEE 802.1x Implementation",
-    url: "https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/sec_usr_8021x/configuration/15-mt/sec-user-8021x-15-mt-book.pdf",
-    description:
-      "Enterprise network access control (NAC) deployment integrating IEEE 802.1x, RADIUS AAA authentication, Cisco switch port security, and Active Directory VLAN assignment.",
-    tags: ["Cisco", "RADIUS", "Active Directory"],
-    preview: "image",
-    image: mock10,
+    description: "Real-time word, character and reading-time counter.",
   },
 ];
 
-function mergeVercelProjects(vercelProjects: VercelProject[]): ProjectData[] {
+function mergeVercelMoreProjects(vercelProjects: VercelProject[]): MoreProject[] {
   return vercelProjects
-    .filter((p) => vercelEnrichment[p.name])
+    .filter((p) => vercelMoreEnrichment[p.name])
     .map((p) => {
-      const enrich = vercelEnrichment[p.name];
+      const enrich = vercelMoreEnrichment[p.name];
       return {
         title: enrich.title,
         url: enrich.urlOverride ?? p.url,
         description: enrich.description,
-        tags: enrich.tags,
-        preview: enrich.preview,
-        image: enrich.image,
       };
     });
 }
 
-function ProjectSkeleton() {
-  return (
-    <div className="project-card skeleton-card">
-      <div className="skeleton-preview" />
-      <div className="project-info">
-        <div className="skeleton-line skeleton-title" />
-        <div className="skeleton-line" />
-        <div className="skeleton-line skeleton-short" />
-        <div className="project-tags">
-          <span className="skeleton-tag" />
-          <span className="skeleton-tag" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function Project() {
-  const [vercelProjects, setVercelProjects] = useState<ProjectData[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [moreFromVercel, setMoreFromVercel] = useState<MoreProject[]>([]);
 
   useEffect(() => {
     fetch("/api/vercel-projects")
       .then((r) => r.json())
       .then((data) => {
         if (data.projects) {
-          setVercelProjects(mergeVercelProjects(data.projects));
+          setMoreFromVercel(mergeVercelMoreProjects(data.projects));
         }
       })
-      .catch(() => { })
-      .finally(() => setLoading(false));
+      // "More projects" must degrade gracefully: if this call fails, the
+      // manual entries below still render and nothing breaks.
+      .catch(() => {});
   }, []);
 
-  const allProjects = [...vercelProjects, ...manualProjects];
+  const moreProjects = [...manualMoreProjects, ...moreFromVercel];
 
   return (
     <div className="projects-container" id="projects">
-      <h1>Personal Projects</h1>
+      <h1>Featured Work</h1>
       <div className="projects-grid">
-        {loading
-          ? Array.from({ length: 3 }).map((_, i) => <ProjectSkeleton key={i} />)
-          : allProjects.map((project, index) => (
-            <div className="project-card" key={`${project.title}-${index}`}>
-              {project.preview === "iframe" ? (
-                <IframePreview
-                  src={project.url}
-                  title={`${project.title} preview`}
+        {featuredProjects.map((project) => (
+          <div className="project-card" key={project.id}>
+            {project.preview === "iframe" ? (
+              <IframePreview
+                src={project.url}
+                title={`${project.title} preview`}
+                href={project.url}
+                label={`Open ${project.title}`}
+              />
+            ) : (
+              <div className="static-preview">
+                <img src={project.image} alt={project.title} />
+                <a
                   href={project.url}
-                  label={`Open ${project.title}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="project-preview-overlay"
+                  aria-label={`Open ${project.title}`}
                 />
-              ) : (
-                <div className="static-preview">
-                  <img src={project.image} alt={project.title} />
-                  <a
-                    href={project.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="project-preview-overlay"
-                    aria-label={`Open ${project.title}`}
-                  />
-                </div>
-              )}
-              <div className="project-info">
-                <a href={project.url} target="_blank" rel="noreferrer">
-                  <h2>{project.title}</h2>
-                </a>
-                <p>{project.description}</p>
-                <div className="project-tags">
-                  {project.tags.map((tag, tagIndex) => (
-                    <span className="project-tag" key={`${project.title}-${tag}-${tagIndex}`}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
               </div>
+            )}
+            <div className="project-info">
+              <a href={project.url} target="_blank" rel="noreferrer">
+                <h2>{project.title}</h2>
+              </a>
+              <p className="project-headline">{project.headline}</p>
+              <dl className="project-breakdown">
+                <div>
+                  <dt>Problem</dt>
+                  <dd>{project.problem}</dd>
+                </div>
+                <div>
+                  <dt>What I built</dt>
+                  <dd>{project.builtIt}</dd>
+                </div>
+                <div>
+                  <dt>Result</dt>
+                  <dd className="project-result-todo">{project.result}</dd>
+                </div>
+              </dl>
+              <div className="project-tags">
+                {project.tags.map((tag) => (
+                  <span className="project-tag" key={`${project.id}-${tag}`}>
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <a className="project-link" href={project.url} target="_blank" rel="noreferrer">
+                {project.linkLabel} &rarr;
+              </a>
             </div>
-          ))}
+          </div>
+        ))}
       </div>
+
+      {moreProjects.length > 0 && (
+        <div className="more-projects">
+          <h3>More projects</h3>
+          <ul className="more-projects-list">
+            {moreProjects.map((project) => (
+              <li key={project.title}>
+                <a href={project.url} target="_blank" rel="noreferrer">
+                  <span className="more-project-title">{project.title}</span>
+                  <span className="more-project-desc">{project.description}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

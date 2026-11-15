@@ -110,6 +110,103 @@
     }
 }
 
+// ── Featured project breakdown (headline / Problem / Built / Result) ──────
+.project-headline {
+    font-size: 1rem !important;
+    font-weight: 700;
+    color: #a78bfa;
+    opacity: 1 !important;
+}
+
+.project-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 4px 0 0;
+
+    dt {
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        opacity: 0.5;
+        margin: 0;
+    }
+
+    dd {
+        font-size: 0.875rem;
+        line-height: 1.6;
+        opacity: 0.8;
+        margin: 2px 0 0;
+    }
+}
+
+.project-result-todo {
+    color: #fbbf24;
+    opacity: 1;
+    font-style: italic;
+}
+
+.project-link {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #a78bfa;
+
+    &:hover {
+        color: #c084fc;
+    }
+}
+
+// ── "More projects" compact list ───────────────────────────────────────────
+.more-projects {
+    margin-top: 56px;
+
+    h3 {
+        font-size: 1.1rem;
+        margin: 0 0 16px;
+    }
+}
+
+.more-projects-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    li a {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 10px;
+        padding: 12px 4px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        transition: opacity 0.2s ease;
+
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+
+    .more-project-title {
+        font-weight: 700;
+        font-size: 0.95rem;
+        flex-shrink: 0;
+    }
+
+    .more-project-desc {
+        font-size: 0.85rem;
+        opacity: 0.65;
+    }
+}
+
+.light-mode .more-projects-list li a {
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
 // ── Tech tags ──────────────────────────────────────────────────────────────
 .project-tags {
     display: flex;
@@ -169,70 +266,6 @@
     }
 }
 
-// ── Skeleton loading ───────────────────────────────────────────────────────
-@keyframes skeleton-shimmer {
-    0%   { background-position: -400px 0; }
-    100% { background-position: 400px 0; }
-}
-
-%skeleton-base {
-    background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0.04) 25%,
-        rgba(255, 255, 255, 0.09) 50%,
-        rgba(255, 255, 255, 0.04) 75%
-    );
-    background-size: 800px 100%;
-    animation: skeleton-shimmer 1.4s infinite linear;
-    border-radius: 6px;
-}
-
-.skeleton-card {
-    pointer-events: none;
-}
-
-.skeleton-preview {
-    @extend %skeleton-base;
-    width: 100%;
-    aspect-ratio: 16 / 10;
-    border-radius: 0;
-}
-
-.skeleton-line {
-    @extend %skeleton-base;
-    height: 14px;
-    width: 100%;
-
-    &.skeleton-title {
-        height: 18px;
-        width: 55%;
-    }
-
-    &.skeleton-short {
-        width: 70%;
-    }
-}
-
-.skeleton-tag {
-    @extend %skeleton-base;
-    display: inline-block;
-    width: 54px;
-    height: 22px;
-    border-radius: 20px;
-}
-
-.light-mode {
-    %skeleton-base {
-        background: linear-gradient(
-            90deg,
-            rgba(0, 0, 0, 0.05) 25%,
-            rgba(0, 0, 0, 0.10) 50%,
-            rgba(0, 0, 0, 0.05) 75%
-        );
-        background-size: 800px 100%;
-    }
-}
-
 // ── Mobile ─────────────────────────────────────────────────────────────────
 @media screen and (max-width: 700px) {
     .projects-container {
@@ -242,5 +275,10 @@
     .projects-container .projects-grid {
         grid-template-columns: 1fr;
         gap: 24px;
+    }
+
+    .more-projects-list li a {
+        flex-direction: column;
+        gap: 2px;
     }
 }
