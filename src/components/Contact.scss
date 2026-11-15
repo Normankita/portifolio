@@ -88,15 +88,15 @@
     -moz-appearance: none;
     cursor: pointer;
     transition: border-bottom-color 0.3s ease, color 0.3s ease;
+    // The dropdown list itself is rendered natively by the browser/OS and
+    // can't be styled directly -- color-scheme tells it to use its own dark
+    // form-control theme (dark popup background, light option text) instead
+    // of defaulting to light. Supported in Chromium/Firefox; harmless no-op
+    // elsewhere.
+    color-scheme: dark;
 
     &:focus {
         border-bottom-color: rgba(255, 255, 255, 0.6);
-    }
-
-    // The native dropdown list is rendered by the OS/browser, not styled by
-    // this stylesheet -- give its options a readable color regardless.
-    option {
-        color: #0d1116;
     }
 }
 
@@ -265,6 +265,7 @@
         color: #0d1116;
         border-bottom-color: rgba(0, 0, 0, 0.2);
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230d1116' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+        color-scheme: light;
 
         &:focus {
             border-bottom-color: rgba(0, 0, 0, 0.5);
