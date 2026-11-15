@@ -101,9 +101,16 @@
     }
 }
 
+.contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
 .butt {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     background: transparent;
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -113,6 +120,7 @@
     color: white;
     font-size: 1rem;
     font-family: "Lato", sans-serif;
+    text-decoration: none;
     transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
 
     &:hover {
@@ -126,8 +134,44 @@
         transform: translateY(0);
     }
 
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+
     svg {
         font-size: 1.1em;
+    }
+}
+
+.whatsapp-btn {
+    border-color: rgba(37, 211, 102, 0.4);
+    color: #25d366;
+
+    &:hover {
+        background: rgba(37, 211, 102, 0.12);
+        border-color: #25d366;
+        box-shadow: 0 0 16px rgba(37, 211, 102, 0.25);
+    }
+}
+
+.form-feedback {
+    margin-top: 16px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.form-success {
+    color: #27c93f;
+}
+
+.form-error {
+    color: #ff8a8a;
+
+    a {
+        color: #25d366;
+        text-decoration: underline;
     }
 }
 
@@ -158,8 +202,18 @@
         }
     }
 
+    .form-error a {
+        color: #1da851;
+    }
+
     .butt {
         color: #0d1116;
         border-color: rgba(0, 0, 0, 0.2);
+    }
+
+    // Must come after .butt: same specificity, needs to win the cascade.
+    .whatsapp-btn {
+        color: #1da851;
+        border-color: rgba(37, 211, 102, 0.5);
     }
 }
